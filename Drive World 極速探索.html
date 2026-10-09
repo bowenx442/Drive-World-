@@ -1,0 +1,2956 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Drive World 極速探索 - 官方網站</title>
+    <style>
+        /* 全域樣式與 Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #0b0f19;
+            color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 頂部導覽列 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 90;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: #38bdf8;
+            letter-spacing: 2px;
+            text-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+        }
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #38bdf8;
+        }
+
+        /* Hero 主視覺區 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%, #0b0f19 100%);
+            position: relative;
+            padding: 0 20px;
+        }
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .hero p {
+            font-size: 20px;
+            color: #94a3b8;
+            max-width: 650px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+        .btn-glow {
+            display: inline-block;
+            padding: 16px 42px;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #0f172a;
+            font-size: 18px;
+            font-weight: 800;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.7);
+        }
+
+        /* 通用內容區塊 */
+        section {
+            padding: 90px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 50px;
+            color: #f1f5f9;
+        }
+        .section-title span {
+            color: #38bdf8;
+        }
+
+        /* 四大核心特色 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+        .feature-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(56, 189, 248, 0.5);
+            background: rgba(30, 41, 59, 0.8);
+        }
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #38bdf8;
+        }
+        .feature-card p {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* 四大地圖區域介紹 */
+        .world-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .world-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 14px;
+            padding: 25px;
+            border-left: 4px solid #38bdf8;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .world-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .world-card p {
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* 武器軍火庫與裝備介紹 */
+        .weapons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        .weapon-box {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+        }
+        .weapon-box .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+        .weapon-box h4 {
+            color: #f8fafc;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .weapon-box p {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* 互動建築與超市 */
+        .interact-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .interact-box {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .interact-box h3 {
+            font-size: 22px;
+            color: #38bdf8;
+            margin-bottom: 15px;
+        }
+        .interact-box ul {
+            list-style: none;
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .interact-box ul li::before {
+            content: "▹ ";
+            color: #38bdf8;
+        }
+
+        /* 動態預告展演 Canvas 區 */
+        .trailer-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            background: #000;
+            aspect-ratio: 16/9;
+        }
+        #demo-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* 常見問題 FAQ */
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .faq-item {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .faq-item h4 {
+            color: #38bdf8;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .faq-item p {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* 最下方啟動遊戲區域 */
+        .play-section {
+            text-align: center;
+            padding: 100px 20px;
+            background: radial-gradient(circle at bottom, #1e293b 0%, #0b0f19 80%);
+        }
+        .play-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #38bdf8;
+            border-radius: 24px;
+            padding: 50px 30px;
+            display: inline-block;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.2);
+        }
+        .start-btn-large {
+            display: inline-block;
+            width: 100%;
+            padding: 20px 0;
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #0f172a;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
+            transition: all 0.2s ease;
+        }
+        .start-btn-large:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(56, 189, 248, 0.6);
+        }
+
+        /* 全螢幕遊戲容器 (點擊開始遊戲後彈出) */
+        #game-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #07090e;
+            z-index: 99999;
+            overflow: hidden;
+        }
+        #close-game-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(239, 68, 68, 0.95);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 100000;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: background 0.2s, transform 0.1s;
+        }
+        #close-game-btn:hover {
+            background: rgba(220, 38, 38, 1);
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 13px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 42px; }
+            .hero p { font-size: 16px; }
+            header { padding: 15px 20px; }
+            .interact-detail { grid-template-columns: 1fr; }
+        }
+
+        /* ------------------ 遊戲主選單與內部 UI 樣式 ------------------ */
+        #game-overlay body { 
+            margin: 0; overflow: hidden; background-color: #07090e; font-family: sans-serif; 
+            user-select: none; -webkit-user-select: none; touch-action: none; 
+        }
+
+        /* 主介面 UI Overlay */
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 100;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        /* 上方：遊戲名字標題外框 */
+        #start-title-container {
+            align-self: center;
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid rgba(56, 189, 248, 0.4);
+            border-radius: 20px;
+            padding: 15px 80px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            pointer-events: auto;
+        }
+        #start-title {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+        }
+
+        /* 左側：直立式功能選單按鈕 */
+        #menu-buttons-left {
+            position: absolute;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            pointer-events: auto;
+            z-index: 102;
+        }
+
+        .menu-btn-item {
+            width: 220px;
+            padding: 14px 20px;
+            border-radius: 14px;
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .menu-btn-item:hover {
+            transform: translateX(8px);
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.8);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .menu-btn-primary {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+        }
+
+        .menu-btn-primary:hover {
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.8);
+            transform: translateX(8px) scale(1.02);
+        }
+
+        .menu-btn-icon {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+        }
+
+        /* 底部版權宣告 */
+        #menu-footer-text {
+            align-self: center;
+            color: rgba(148, 163, 184, 0.6);
+            font-size: 12px;
+            pointer-events: auto;
+        }
+
+        /* 彈出視窗面板 (車庫/設定/說明/多人遊戲) */
+        .modal-panel { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85vw; max-width: 400px; background: rgba(15, 23, 42, 0.95); border: 2px solid rgba(56, 189, 248, 0.6); border-radius: 16px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.8); z-index: 105; color: #fff; box-sizing: border-box; backdrop-filter: blur(12px); }
+        .modal-panel h2 { margin-top: 0; text-align: center; color: #38bdf8; font-size: 22px; }
+        .setting-row { margin: 18px 0; display: flex; flex-direction: column; gap: 8px; }
+        .setting-row label { font-size: 14px; color: #cbd5e1; font-weight: bold; }
+        .setting-row select, .setting-row input[type="range"], .setting-row input[type="text"] { padding: 10px; border-radius: 8px; background: #1e293b; color: #fff; border: 1px solid #475569; font-size: 14px; outline: none; }
+        .modal-btn { width: 100%; padding: 10px; background: #38bdf8; color: #0f172a; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 15px; font-size: 16px; transition: background 0.2s; }
+        .modal-btn:hover { background: #7dd3fc; }
+
+        /* 多人遊戲專用輸入框與按鈕樣式 */
+        .multi-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            margin-top: 10px;
+        }
+        .multi-btn:hover {
+            background: linear-gradient(135deg, #34d399, #10b981);
+        }
+        .room-code-display {
+            font-size: 28px;
+            font-weight: 900;
+            color: #38bdf8;
+            letter-spacing: 5px;
+            text-align: center;
+            background: rgba(30, 41, 59, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px dashed #38bdf8;
+            margin: 10px 0;
+        }
+
+        /* 遊戲內 HUD 元素 (預設全數 display: none，進入開放世界後才顯現) */
+        .game-ui { display: none; }
+        #info { position: absolute; top: 10px; left: 10px; color: #fff; background: rgba(15, 23, 42, 0.85); padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); pointer-events: none; z-index: 5; font-size: 11px; max-width: 55vw; box-sizing: border-box; display: none; }
+        #info h1 { margin: 0 0 2px 0; font-size: 13px; color: #38bdf8; }
+        #info p { margin: 2px 0; color: #cbd5e1; font-size: 10px; }
+        kbd { background: #334155; padding: 1px 3px; border-radius: 3px; font-size: 9px; }
+        
+        /* 天氣/時間 HUD - 預設隱藏 */
+        #weather-hud { display: none; position: absolute; top: 75px; left: 10px; color: #38bdf8; background: rgba(15, 23, 42, 0.85); padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 11px; z-index: 5; }
+        #status-hud { position: absolute; top: 130px; left: 10px; text-align: left; pointer-events: none; z-index: 5; background: rgba(15, 23, 42, 0.7); padding: 4px 8px; border-radius: 6px; display: none; }
+        #speedometer { color: #38bdf8; font-size: 18px; font-weight: bold; }
+        #mode-indicator { color: #34d399; font-size: 11px; }
+        #interact-prompt { display: none; position: absolute; bottom: 230px; left: 50%; transform: translateX(-50%); background: rgba(16, 185, 129, 0.95); color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 50; pointer-events: auto; cursor: pointer; transition: transform 0.1s ease, background 0.1s; border: 1.5px solid rgba(255, 255, 255, 0.6); }
+        #interact-prompt:active { transform: translateX(-50%) scale(0.92); background: rgba(5, 150, 105, 0.95); }
+        
+        #minimap-container { position: absolute; top: 70px; right: 15px; width: 130px; height: 130px; border-radius: 50%; border: 2px solid rgba(56, 189, 248, 0.8); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); overflow: hidden; background: rgba(15, 23, 42, 0.85); z-index: 10; pointer-events: none; display: none; }
+        #minimap { width: 100%; height: 100%; display: block; }
+
+        .controls-container { position: absolute; bottom: 15px; width: 100%; justify-content: space-between; padding: 0 15px; box-sizing: border-box; z-index: 10; display: none; }
+        .btn-group { display: flex; gap: 10px; align-items: flex-end; }
+        .touch-btn { width: 55px; height: 55px; background: rgba(30, 41, 59, 0.8); border: 1.5px solid rgba(56, 189, 248, 0.6); border-radius: 50%; color: #fff; font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: center; touch-action: manipulation; cursor: pointer; }
+        .touch-btn:active, .touch-btn.active { background: rgba(56, 189, 248, 0.5); }
+        .btn-pedal { border-radius: 10px; height: 65px; width: 50px; }
+        #btn-accel { border-color: #4ade80; color: #4ade80; }
+        #btn-brake { border-color: #f87171; color: #f87171; }
+        #steering-wheel-container { display: none; width: 100px; height: 100px; background: rgba(30, 41, 59, 0.6); border: 3px solid rgba(56, 189, 248, 0.8); border-radius: 50%; position: relative; touch-action: none; box-sizing: border-box; }
+        #steering-wheel-inner { width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.05s ease-out; }
+        #steering-wheel-line { width: 80%; height: 8px; background: #38bdf8; border-radius: 4px; }
+        
+        /* 主選單操控按鈕預設一律隱藏 (display: none) */
+        #btn-action { position: absolute; bottom: 90px; right: 15px; width: 60px; height: 60px; font-size: 12px; border-radius: 50%; background: rgba(245, 158, 11, 0.3); border: 2px solid #f59e0b; color: #fbbf24; z-index: 10; display: none; }
+        #btn-horn { position: absolute; bottom: 160px; right: 15px; width: 50px; height: 50px; font-size: 18px; border-radius: 50%; background: rgba(56, 189, 248, 0.3); border: 2px solid #38bdf8; color: #38bdf8; z-index: 10; display: none; }
+        #btn-phone { position: absolute; bottom: 90px; right: 85px; width: 55px; height: 55px; font-size: 22px; border-radius: 50%; background: rgba(56, 189, 248, 0.3); border: 2px solid #38bdf8; color: #38bdf8; z-index: 10; display: none; }
+        #btn-weapon { position: absolute; bottom: 90px; right: 150px; width: 55px; height: 55px; font-size: 22px; border-radius: 50%; background: rgba(239, 68, 68, 0.3); border: 2px solid #ef4444; color: #ef4444; z-index: 10; display: none; }
+        #btn-bag { position: absolute; bottom: 20px; right: 150px; width: 55px; height: 55px; font-size: 22px; border-radius: 50%; background: rgba(16, 185, 129, 0.3); border: 2px solid #10b981; color: #10b981; z-index: 10; display: none; }
+        #btn-attack { position: absolute; bottom: 160px; right: 85px; width: 55px; height: 55px; font-size: 20px; border-radius: 50%; background: rgba(239, 68, 68, 0.4); border: 2px solid #ef4444; color: #fff; z-index: 10; display: none; }
+        #btn-reset { position: absolute; top: 210px; right: 15px; width: 42px; height: 42px; font-size: 14px; font-weight: bold; border-radius: 50%; background: rgba(30, 41, 59, 0.9); border: 1.5px solid rgba(56, 189, 248, 0.6); color: #38bdf8; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: none; }
+        
+        #person-controls { position: absolute; bottom: 15px; right: 15px; display: none; z-index: 10; }
+        #joystick-container { position: absolute; bottom: 20px; left: 20px; width: 100px; height: 100px; background: rgba(30, 41, 59, 0.4); border: 2px solid rgba(56, 189, 248, 0.4); border-radius: 50%; display: none; z-index: 10; touch-action: none; }
+        #joystick-stick { position: absolute; top: 30px; left: 30px; width: 40px; height: 40px; background: rgba(56, 189, 248, 0.7); border-radius: 50%; pointer-events: none; }
+        #weapon-wheel-overlay { display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 200; justify-content: center; align-items: center; }
+        .wheel-container { position: relative; width: 320px; height: 320px; border-radius: 50%; border: 3px solid rgba(56, 189, 248, 0.5); background: rgba(15, 23, 42, 0.85); box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+        .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; background: #0f172a; border-radius: 50%; border: 2px solid #38bdf8; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-size: 12px; text-align: center; pointer-events: none; }
+        .wheel-item { position: absolute; width: 65px; height: 65px; border-radius: 50%; background: rgba(30, 41, 59, 0.9); border: 2px solid rgba(255, 255, 255, 0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; color: #fff; font-size: 20px; transition: transform 0.15s, border-color 0.15s, background 0.15s; }
+        .wheel-item:hover, .wheel-item.selected { border-color: #38bdf8; background: rgba(56, 189, 248, 0.3); transform: scale(1.15); }
+        .wheel-item span { font-size: 9px; color: #cbd5e1; margin-top: 2px; }
+        .grid-modal { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85vw; max-width: 420px; background: rgba(15, 23, 42, 0.95); border: 2px solid #10b981; border-radius: 12px; padding: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.8); z-index: 200; color: #fff; box-sizing: border-box; }
+        .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; max-height: 260px; overflow-y: auto; }
+        .item-card { background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center; }
+        .item-card:active { transform: scale(0.95); }
+        .item-icon { font-size: 24px; }
+        .item-name { font-size: 11px; margin-top: 4px; color: #cbd5e1; }
+        .item-count { font-size: 10px; color: #10b981; font-weight: bold; }
+        #phone-wrapper { position: absolute; bottom: -500px; right: 25px; width: 220px; height: 420px; background: #090d16; border: 10px solid #1e293b; border-radius: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(56, 189, 248, 0.3); z-index: 90; transition: bottom 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
+        #phone-wrapper.active { bottom: 20px; }
+        #phone-header { background: rgba(15, 23, 42, 0.9); padding: 6px 12px; color: #94a3b8; font-size: 11px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        #phone-screen { flex: 1; background: linear-gradient(135deg, #0284c7, #0f172a); padding: 15px 10px; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 55px; gap: 12px; align-content: start; position: relative; }
+        .phone-app { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(4px); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 20px; color: #fff; position: relative; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.1s; }
+        .phone-app:active { transform: scale(0.9); }
+        .phone-app span { font-size: 9px; margin-top: 2px; color: #e2e8f0; }
+        .phone-badge { position: absolute; top: -4px; right: -4px; background: #ef4444; color: white; font-size: 9px; font-weight: bold; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        #phone-footer { height: 35px; background: #0f172a; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); }
+        .phone-nav-btn { color: #64748b; font-size: 14px; cursor: pointer; }
+        .phone-nav-btn:hover { color: #38bdf8; }
+    </style>
+</head>
+<body>
+
+    <!-- 頁首導覽列 -->
+    <header>
+        <div class="logo">DRIVE WORLD</div>
+        <nav>
+            <a href="#features">遊戲特色</a>
+            <a href="#worlds">四大生態</a>
+            <a href="#arsenal">武器裝備</a>
+            <a href="#interact">城鎮互動</a>
+            <a href="#trailer">實機展示</a>
+            <a href="#faq">常見問題</a>
+            <a href="#play">進入遊戲</a>
+        </nav>
+    </header>
+
+    <!-- Hero 主視覺宣傳區 -->
+    <div class="hero">
+        <h1>Drive World 極速探索</h1>
+        <p>無縫探索四大地形大陸！駕駛極速超跑、體驗豐富槍械戰鬥、走進 3D 超市購物與同步真實地理天氣！</p>
+        <a href="#play" class="btn-glow">前往遊戲進入區</a>
+    </div>
+
+    <!-- 遊戲四大核心特色 -->
+    <section id="features">
+        <h2 class="section-title">遊戲 <span>四大核心特色</span></h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🏙️</div>
+                <h3>四大自由大陸</h3>
+                <p>包含現代都市、黃沙丘陵、茂密森林與長達近 200 公尺的環狀跨海大橋無縫連接。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏎️</div>
+                <h3>豐富座駕選擇</h3>
+                <p>標準轎車、性能跑車、越野休旅、極速超跑、巡邏警車到大型公車應有盡有！</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔫</div>
+                <h3>自由步行與戰鬥</h3>
+                <p>隨時下車切換自由步行，輪盤切換手槍、衝鋒槍、步槍、霰彈槍與狙擊槍開火。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌤️</div>
+                <h3>即時氣候與商店</h3>
+                <p>自動連線真實氣候與時區，可自由走進超市選購商品或參觀復古警局。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 四大開放地圖生態介紹 -->
+    <section id="worlds">
+        <h2 class="section-title">開放世界 <span>四大生態區域</span></h2>
+        <div class="world-grid">
+            <div class="world-card">
+                <h3>🏙️ 現代科技都市</h3>
+                <p>擁有高聳入雲的摩天大樓與發光霓虹燈，棋盤式的街道設計適合進行高速狂飆與極限甩尾過彎。</p>
+            </div>
+            <div class="world-card" style="border-color: #eab308;">
+                <h3 style="color:#eab308;">🌵 黃沙丘陵荒漠</h3>
+                <p>廣袤無垠的起伏沙丘地形，佈滿巨型仙人掌與巨石，非常考驗越野車與卡車的懸吊爬坡性能。</p>
+            </div>
+            <div class="world-card" style="border-color: #22c55e;">
+                <h3 style="color:#22c55e;">🌲 茂密原始森林</h3>
+                <p>高聳的松樹林與林間小徑交織，考驗玩家在高速行駛下的敏捷避障能力，體驗野外探索樂趣。</p>
+            </div>
+            <div class="world-card" style="border-color: #a855f7;">
+                <h3 style="color:#a855f7;">🌉 環狀跨海大橋</h3>
+                <p>長達數百公尺的震撼海上高架公路，搭配路燈光影與兩側壯麗海景，是測試車輛極速的最佳賽道。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 軍火庫與武器介紹 -->
+    <section id="arsenal">
+        <h2 class="section-title">軍火庫 <span>戰鬥武器與配備</span></h2>
+        <div class="weapons-container">
+            <div class="weapon-box">
+                <div class="icon">👊</div>
+                <h4>徒手拳頭</h4>
+                <p>近身搏鬥基礎攻擊</p>
+            </div>
+            <div class="weapon-box">
+                <div class="icon">🔫</div>
+                <h4>半自動手槍</h4>
+                <p>輕巧靈活、穩定射擊</p>
+            </div>
+            <div class="weapon-box">
+                <div class="icon">⚡</div>
+                <h4>衝鋒槍</h4>
+                <p>高射速近距離壓制</p>
+            </div>
+            <div class="weapon-box">
+                <div class="icon">💥</div>
+                <h4>突擊步槍</h4>
+                <p>全方位遠近兼備火力</p>
+            </div>
+            <div class="weapon-box">
+                <div class="icon">🔥</div>
+                <h4>霰彈槍</h4>
+                <p>近距離散射極高傷害</p>
+            </div>
+            <div class="weapon-box">
+                <div class="icon">🎯</div>
+                <h4>重型狙擊槍</h4>
+                <p>超遠距離精確打擊</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 城鎮互動與設施介紹 -->
+    <section id="interact">
+        <h2 class="section-title">沉浸式 <span>城鎮生活與互動</span></h2>
+        <div class="interact-detail">
+            <div class="interact-box">
+                <h3>🛒 3D 超級市場實體購物</h3>
+                <ul>
+                    <li>生鮮水果區：選購新鮮蘋果、香蕉與西瓜</li>
+                    <li>速食熟食區：購買美味漢堡、披薩與甜甜圈</li>
+                    <li>飲料冰品區：享用冰涼可樂、美式咖啡與霜淇淋</li>
+                    <li>所有購買物品將即時收入玩家的 🎒 個人背包</li>
+                </ul>
+            </div>
+            <div class="interact-box" style="border-color: #3b82f6;">
+                <h3 style="color:#60a5fa;">🚓 復古古典警察局</h3>
+                <ul>
+                    <li>可親自走進警局大廳參觀實體內部構造</li>
+                    <li>設有復古木質辦公桌、檯燈與專用通訊電話</li>
+                    <li>包含專案線索佈告欄與金屬檔案保管櫃</li>
+                    <li>與 NPC 與城鎮警察設施進行深入對話與互動</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 實機預告展演區 -->
+    <section id="trailer">
+        <h2 class="section-title">實機 <span>預告演示</span></h2>
+        <div class="trailer-container">
+            <canvas id="demo-canvas"></canvas>
+        </div>
+    </section>
+
+    <!-- 常見問題 FAQ -->
+    <section id="faq">
+        <h2 class="section-title">常見 <span>問題解答 FAQ</span></h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <h4>Q1: 遊戲需要下載額外軟體或安裝檔嗎？</h4>
+                <p>完全不需要！《Drive World 極速探索》採用純 HTML5 與 Three.js 3D 渲染技術，只需點擊網頁上的開始遊戲按鈕即可直接在瀏覽器內順暢遊玩。</p>
+            </div>
+            <div class="faq-item">
+                <h4>Q2: 遊戲支援手機或平板觸控遊玩嗎？</h4>
+                <p>支援！遊戲內內建靈敏的虛擬搖桿、轉向按鈕、方向盤模式與專用觸控按鈕，不論是電腦鍵盤或行動裝置觸控都能獲得極佳操控體驗。</p>
+            </div>
+            <div class="faq-item">
+                <h4>Q3: 如何更換我駕駛的車輛？</h4>
+                <p>點擊主選單中的「車庫 (Garage)」，即可在包含超跑、公車、警車、敞篷車等多達 9 種車款中隨心切換。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 遊戲啟動區 -->
+    <div class="play-section" id="play">
+        <div class="play-card">
+            <h2 style="font-size:32px; margin-bottom:15px; color:#fff;">準備好展開冒險了嗎？</h2>
+            <p style="color:#94a3b8; margin-bottom:30px;">無需下載安裝，點擊下方按鈕即可直接在瀏覽器中啟動 3D 開放世界！</p>
+            <button class="start-btn-large" id="launch-game-btn">🎮 啟動遊戲主介面</button>
+        </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>© 2026 Drive World 極速探索. All Rights Reserved.</p>
+    </footer>
+
+    <!-- ==================== 遊戲全螢幕彈出層 ==================== -->
+    <div id="game-overlay">
+        <!-- 右上角退出按鈕 -->
+        <button id="close-game-btn">✕ 退出遊戲 / Exit</button>
+
+        <!-- 主介面 Overlay -->
+        <div id="start-screen">
+            <!-- 上方：遊戲名字 -->
+            <div id="start-title-container">
+                <div id="start-title">Drive World 極速探索</div>
+            </div>
+
+            <!-- 左側：直立式功能選單按鈕 (新增多人遊戲) -->
+            <div id="menu-buttons-left">
+                <button id="play-btn" class="menu-btn-item menu-btn-primary">
+                    <span>🏎️ 單人遊戲</span>
+                    <span class="menu-btn-icon">➔</span>
+                </button>
+                <button id="multiplay-btn" class="menu-btn-item" style="background: linear-gradient(135deg, #10b981, #059669); border-color: rgba(255,255,255,0.4);">
+                    <span>🌐 多人遊戲</span>
+                    <span class="menu-btn-icon">👥</span>
+                </button>
+                <button id="garage-btn" class="menu-btn-item">
+                    <span>🔧 車庫</span>
+                    <span class="menu-btn-icon">⚙️</span>
+                </button>
+                <button id="help-btn" class="menu-btn-item">
+                    <span>📖 遊戲說明</span>
+                    <span class="menu-btn-icon">i</span>
+                </button>
+                <button id="settings-btn" class="menu-btn-item">
+                    <span>⚙️ 遊戲設定</span>
+                    <span class="menu-btn-icon">🛠️</span>
+                </button>
+            </div>
+
+            <!-- 底部版權字樣 -->
+            <div id="menu-footer-text">© 2026 3D Driving Simulator. All Rights Reserved.</div>
+        </div>
+
+        <!-- 多人遊戲彈出視窗 -->
+        <div id="multiplay-modal" class="modal-panel">
+            <h2>🌐 多人區網連線</h2>
+            <div style="font-size:12px; color:#cbd5e1; text-align:center; margin-bottom:15px;">
+                同一個 Wi-Fi / 網路環境下可連線共同遊玩
+            </div>
+
+            <!-- 模式選擇 -->
+            <div id="multiplay-options">
+                <button id="create-room-btn" class="modal-btn multi-btn">🏠 創建房間</button>
+                <div style="text-align:center; margin: 15px 0; color:#94a3b8; font-size:13px;">— 或 —</div>
+                <div class="setting-row" style="margin: 0;">
+                    <label>輸入 6 位數房間代碼：</label>
+                    <input type="text" id="join-room-code-input" maxlength="6" placeholder="例如: 839102" style="text-align:center; font-size:18px; letter-spacing:3px;">
+                </div>
+                <button id="join-room-btn" class="modal-btn" style="background:#6366f1; color:#fff; margin-top:10px;">🔑 加入房間</button>
+            </div>
+
+            <!-- 創建房間中顯示 -->
+            <div id="room-created-info" style="display:none; text-align:center;">
+                <div style="font-size:13px; color:#cbd5e1;">你的房間代碼：</div>
+                <div id="my-room-code" class="room-code-display">------</div>
+                <div id="room-status-text" style="font-size:12px; color:#f59e0b; margin-bottom:10px;">等待玩家連線中...</div>
+                <button id="start-multi-game-btn" class="modal-btn multi-btn" style="display:none;">🏎️ 進入遊戲</button>
+            </div>
+
+            <button id="close-multiplay-btn" class="modal-btn" style="background:#475569; color:#fff; margin-top:15px;">關閉</button>
+        </div>
+
+        <!-- 車庫彈出視窗 -->
+        <div id="garage-modal" class="modal-panel">
+            <h2 id="garage-title">車庫 / Garage</h2>
+            <div class="setting-row">
+                <label id="garage-car-label">選擇座駕 (Vehicle)</label>
+                <select id="garage-car-select">
+                    <option value="sedan">標準轎車 (Sedan)</option>
+                    <option value="sports">性能跑車 (Sports Car)</option>
+                    <option value="suv">越野休旅 (SUV)</option>
+                    <option value="truck">貨櫃卡車 (Truck)</option>
+                    <option value="taxi">城市計程車 (Taxi)</option>
+                    <option value="supercar">極速超跑 (Supercar)</option>
+                    <option value="police">巡邏警車 (Police Car)</option>
+                    <option value="bus">大型公車 (Bus)</option>
+                    <option value="convertible">時尚敞篷車 (Convertible)</option>
+                </select>
+            </div>
+            <button id="close-garage-btn" class="modal-btn">確定選擇 / OK</button>
+        </div>
+
+        <!-- 遊戲說明彈出視窗 -->
+        <div id="help-modal" class="modal-panel">
+            <h2>遊戲說明</h2>
+            <div style="font-size:13px; color:#cbd5e1; line-height:1.7; margin:15px 0;">
+                <p>• <b>駕駛操控</b>: WASD 或虛擬按鈕操控移動，可切換方向盤模式。</p>
+                <p>• <b>步行/攻擊</b>: 按 F 鍵或右下角按鈕上下車；按 Space 或攻擊按鈕進行戰鬥。</p>
+                <p>• <b>武器與背包</b>: 按 Tab 選換槍械；按 B 打開背包使用商品；按 P 鍵可拿出手機拍照！</p>
+                <p>• <b>多人連線</b>: 在多人遊戲點擊創建房間獲取 6 位數代碼，邀請朋友輸入代碼即可連線！</p>
+            </div>
+            <button id="close-help-btn" class="modal-btn">了解 / OK</button>
+        </div>
+
+        <!-- 設定彈出視窗 -->
+        <div id="settings-modal" class="modal-panel">
+            <h2 id="sett-title">遊戲設定</h2>
+            <div class="setting-row">
+                <label id="sett-lang-label">語言 / Language</label>
+                <select id="sett-lang">
+                    <option value="zh">繁體中文</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <label id="sett-vol-label">音量 (Volume): <span id="vol-val">80%</span></label>
+                <input type="range" id="sett-vol" min="0" max="100" value="80">
+            </div>
+            <div class="setting-row">
+                <label id="sett-steer-label">轉向控制 (Steering Control)</label>
+                <select id="sett-steer">
+                    <option value="buttons">按鈕模式 (Buttons)</option>
+                    <option value="wheel">方向盤模式 (Steering Wheel)</option>
+                </select>
+            </div>
+            <button id="close-settings-btn" class="modal-btn">確定 / OK</button>
+        </div>
+
+        <!-- 背包與貨架 Modal -->
+        <div id="backpack-modal" class="grid-modal">
+            <h2 style="margin:0; text-align:center; color:#10b981;">玩家背包</h2>
+            <div id="backpack-grid" class="grid-container"></div>
+            <button id="close-backpack-btn" class="modal-btn" style="background:#10b981;">關閉</button>
+        </div>
+
+        <div id="shelf-modal" class="grid-modal" style="border-color:#f59e0b;">
+            <h2 id="shelf-title" style="margin:0; text-align:center; color:#f59e0b;">貨架商品</h2>
+            <div id="shelf-grid" class="grid-container"></div>
+            <button id="close-shelf-btn" class="modal-btn" style="background:#f59e0b;">離開貨架</button>
+        </div>
+
+        <!-- 武器輪盤 -->
+        <div id="weapon-wheel-overlay">
+            <div class="wheel-container">
+                <div class="wheel-center">
+                    <span id="wheel-selected-name">拳頭</span>
+                    <span id="wheel-selected-ammo" style="color:#38bdf8; font-size:10px;">無限</span>
+                </div>
+                <div class="wheel-item" data-weapon="fist" style="top: 15px; left: 127px;">👊<span>拳頭</span></div>
+                <div class="wheel-item" data-weapon="pistol" style="top: 65px; right: 25px;">🔫<span>手槍</span></div>
+                <div class="wheel-item" data-weapon="smg" style="bottom: 65px; right: 25px;">⚡<span>衝鋒槍</span></div>
+                <div class="wheel-item" data-weapon="rifle" style="bottom: 15px; left: 127px;">💥<span>步槍</span></div>
+                <div class="wheel-item" data-weapon="sniper" style="bottom: 65px; left: 25px;">🎯<span>狙擊槍</span></div>
+                <div class="wheel-item" data-weapon="shotgun" style="top: 65px; left: 25px;">🔥<span>霰彈槍</span></div>
+            </div>
+        </div>
+
+        <!-- 遊戲 HUD -->
+        <div id="info" class="game-ui">
+            <h1>Drive World 極速探索</h1>
+            <p id="info-controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 行走 | <kbd>Space</kbd> 攻擊/跳躍 | <kbd>F</kbd> 上下車/互動 | <kbd>Tab</kbd> 選武器 | <kbd>B</kbd> 背包 | <kbd>P</kbd> 手機 | 拖曳滑鼠/觸控可旋轉視角</p>
+        </div>
+
+        <div id="weather-hud">氣候: 同步中...</div>
+
+        <div id="status-hud" class="game-ui">
+            <div id="speedometer">0 km/h</div>
+            <div id="mode-indicator">駕駛模式</div>
+        </div>
+
+        <div id="interact-prompt">按下 F 進入互動</div>
+
+        <!-- 小地圖區域 -->
+        <div id="minimap-container" class="game-ui">
+            <canvas id="minimap" width="130" height="130"></canvas>
+        </div>
+
+        <!-- 按鈕區域 -->
+        <button class="touch-btn game-ui" id="btn-reset">R</button>
+        <button class="touch-btn game-ui" id="btn-action">下車</button>
+        <button class="touch-btn game-ui" id="btn-horn">📢</button>
+        <button class="touch-btn game-ui" id="btn-weapon">🔫</button>
+        <button class="touch-btn game-ui" id="btn-bag">🎒</button>
+        <button class="touch-btn game-ui" id="btn-attack">💥</button>
+        <button class="touch-btn game-ui" id="btn-phone">📱</button>
+
+        <!-- 手機介面 -->
+        <div id="phone-wrapper">
+            <div id="phone-header">
+                <span>iFruit</span>
+                <span id="phone-clock">12:00</span>
+                <span>🔋100%</span>
+            </div>
+            <div id="phone-screen">
+                <div class="phone-app" id="app-mail">✉️<span class="app-name">郵件</span><div class="phone-badge">4</div></div>
+                <div class="phone-app" id="app-msg">💬<span class="app-name">訊息</span><div class="phone-badge">2</div></div>
+                <div class="phone-app" id="app-contacts">👤<span class="app-name">通訊錄</span></div>
+                <div class="phone-app" id="app-web">🌐<span class="app-name">網路</span></div>
+                <div class="phone-app" id="app-camera">📷<span class="app-name">相機</span></div>
+                <div class="phone-app" id="app-settings">⚙️<span class="app-name">設定</span></div>
+
+                <div id="camera-modal" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:100; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:10px; box-sizing:border-box;">
+                    <img id="photo-preview" style="width:100%; max-height:70%; object-fit:contain; border:1px solid #38bdf8; border-radius:6px;">
+                    <a id="photo-download-link" download="game-photo.png" style="background:#38bdf8; color:#0f172a; padding:8px 14px; border-radius:6px; font-weight:bold; text-decoration:none; font-size:12px; font-family:sans-serif;">儲存照片到裝置</a>
+                </div>
+            </div>
+            <div id="phone-footer">
+                <span class="phone-nav-btn" id="phone-home-btn">●</span>
+                <span class="phone-nav-btn" id="phone-back-btn">◄</span>
+            </div>
+        </div>
+
+        <div class="controls-container game-ui" id="car-controls">
+            <div class="btn-group" id="steering-buttons">
+                <div class="touch-btn" id="btn-left">◄</div>
+                <div class="touch-btn" id="btn-right">►</div>
+            </div>
+            <div id="steering-wheel-container">
+                <div id="steering-wheel-inner">
+                    <div id="steering-wheel-line"></div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <div class="touch-btn btn-pedal" id="btn-brake">▼</div>
+                <div class="touch-btn btn-pedal" id="btn-accel">▲</div>
+            </div>
+        </div>
+
+        <div class="btn-group" id="person-controls">
+            <div class="touch-btn" id="btn-crouch">蹲</div>
+            <div class="touch-btn" id="btn-jump">跳</div>
+        </div>
+
+        <div id="joystick-container">
+            <div id="joystick-stick"></div>
+        </div>
+    </div>
+
+    <!-- 引入 Three.js 與 PeerJS (區網 P2P 連線) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+
+    <!-- 宣傳 Demo Video Canvas 腳本 -->
+    <script>
+        const demoCanvas = document.getElementById('demo-canvas');
+        const demoCtx = demoCanvas.getContext('2d');
+        let demoFrame = 0;
+
+        function resizeDemoCanvas() {
+            demoCanvas.width = demoCanvas.clientWidth;
+            demoCanvas.height = demoCanvas.clientHeight;
+        }
+        window.addEventListener('resize', resizeDemoCanvas);
+        resizeDemoCanvas();
+
+        function drawDemoVideo() {
+            demoCtx.fillStyle = '#0f172a';
+            demoCtx.fillRect(0, 0, demoCanvas.width, demoCanvas.height);
+
+            demoCtx.strokeStyle = '#334155';
+            demoCtx.lineWidth = 2;
+            const speed = (demoFrame * 4) % 40;
+            for (let y = speed; y < demoCanvas.height; y += 40) {
+                demoCtx.beginPath(); demoCtx.moveTo(0, y); demoCtx.lineTo(demoCanvas.width, y); demoCtx.stroke();
+            }
+
+            demoCtx.strokeStyle = '#eab308';
+            demoCtx.lineWidth = 4;
+            demoCtx.beginPath();
+            demoCtx.moveTo(demoCanvas.width / 2, 0);
+            demoCtx.lineTo(demoCanvas.width / 2, demoCanvas.height);
+            demoCtx.stroke();
+
+            const carX = demoCanvas.width / 2 + Math.sin(demoFrame * 0.05) * 80;
+            demoCtx.fillStyle = '#38bdf8';
+            demoCtx.shadowColor = '#38bdf8';
+            demoCtx.shadowBlur = 20;
+            demoCtx.fillRect(carX - 25, demoCanvas.height / 2 - 40, 50, 80);
+
+            demoCtx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            demoCtx.beginPath();
+            demoCtx.moveTo(carX - 20, demoCanvas.height / 2 - 40);
+            demoCtx.lineTo(carX - 60, demoCanvas.height / 2 - 160);
+            demoCtx.lineTo(carX + 60, demoCanvas.height / 2 - 160);
+            demoCtx.lineTo(carX + 20, demoCanvas.height / 2 - 40);
+            demoCtx.fill();
+            demoCtx.shadowBlur = 0;
+
+            demoCtx.fillStyle = 'rgba(255,255,255,0.85)';
+            demoCtx.font = 'bold 18px sans-serif';
+            demoCtx.fillText('DRIVE WORLD 實機畫面演示', 20, 35);
+
+            demoFrame++;
+            requestAnimationFrame(drawDemoVideo);
+        }
+        drawDemoVideo();
+
+        // 開啟/關閉全螢幕遊戲控制 logic
+        const launchBtn = document.getElementById('launch-game-btn');
+        const gameOverlay = document.getElementById('game-overlay');
+        const closeBtn = document.getElementById('close-game-btn');
+
+        launchBtn.addEventListener('click', () => {
+            gameOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            window.dispatchEvent(new Event('resize'));
+        });
+
+        closeBtn.addEventListener('click', () => {
+            gameOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+    </script>
+
+    <!-- ==================== 遊戲核心 3D 引擎腳本 ==================== -->
+    <script>
+        const gameSettings = {
+            lang: 'zh',
+            volume: 0.8,
+            steerMode: 'buttons',
+            playerCarType: 'sedan'
+        };
+
+        const translations = {
+            zh: {
+                play: "🏎️ 單人遊戲",
+                garage: "🔧 車庫",
+                settings: "⚙️ 遊戲設定",
+                garageTitle: "車庫 / Garage",
+                garageCarLabel: "選擇座駕 (Vehicle)",
+                settTitle: "遊戲設定",
+                langLabel: "語言 / Language",
+                volLabel: "音量 (Volume): ",
+                steerLabel: "轉向控制模式",
+                steerBtn: "按鈕模式 (Buttons)",
+                steerWheel: "方向盤模式 (Steering Wheel)",
+                ok: "確定",
+                info: "<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 行走 | <kbd>Space</kbd> 攻擊/跳躍 | <kbd>F</kbd> 上下車/互動 | <kbd>Tab</kbd> 選武器 | <kbd>B</kbd> 背包 | <kbd>P</kbd> 手機 | 拖曳滑鼠/觸控可旋轉視角",
+                driveMode: "駕駛模式",
+                walkMode: "步行模式",
+                getOff: "下車",
+                getOn: "上車",
+                crouch: "蹲",
+                jump: "跳",
+                weatherSync: "氣候: 同步中...",
+                weatherDefault: "氣候: 連線預設晴朗",
+                appNameMail: "郵件",
+                appNameMsg: "訊息",
+                appNameContacts: "通訊錄",
+                appNameWeb: "網路",
+                appNameCamera: "相機",
+                appNameSettings: "設定"
+            },
+            en: {
+                play: "🏎️ Singleplayer",
+                garage: "🔧 Garage",
+                settings: "⚙️ Settings",
+                garageTitle: "Garage",
+                garageCarLabel: "Select Vehicle",
+                settTitle: "Settings",
+                langLabel: "Language",
+                volLabel: "Volume: ",
+                steerLabel: "Steering Mode",
+                steerBtn: "Buttons",
+                steerWheel: "Steering Wheel",
+                ok: "OK",
+                info: "<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Move | <kbd>Space</kbd> Attack/Jump | <kbd>F</kbd> Enter/Exit/Interact | <kbd>Tab</kbd> Weapon | <kbd>B</kbd> Bag | <kbd>P</kbd> Phone | Drag to Rotate Camera",
+                driveMode: "Drive Mode",
+                walkMode: "Walk Mode",
+                getOff: "Exit",
+                getOn: "Enter",
+                crouch: "Crouch",
+                jump: "Jump",
+                weatherSync: "Weather: Syncing...",
+                weatherDefault: "Weather: Clear (Default)",
+                appNameMail: "Mail",
+                appNameMsg: "Message",
+                appNameContacts: "Contacts",
+                appNameWeb: "Browser",
+                appNameCamera: "Camera",
+                appNameSettings: "Settings"
+            }
+        };
+
+        function updateUILanguage() {
+            const t = translations[gameSettings.lang];
+            document.querySelector('#play-btn span').innerText = t.play;
+            document.querySelector('#garage-btn span').innerText = t.garage;
+            document.querySelector('#settings-btn span').innerText = t.settings;
+            document.getElementById('garage-title').innerText = t.garageTitle;
+            document.getElementById('garage-car-label').innerText = t.garageCarLabel;
+            document.getElementById('close-garage-btn').innerText = t.ok;
+            document.getElementById('sett-title').innerText = t.settTitle;
+            document.getElementById('sett-lang-label').innerText = t.langLabel;
+            document.getElementById('sett-vol-label').innerText = t.volLabel + Math.round(gameSettings.volume * 100) + "%";
+            document.getElementById('sett-steer-label').innerText = t.steerLabel;
+            document.getElementById('close-settings-btn').innerText = t.ok;
+            document.getElementById('info-controls').innerHTML = t.info;
+            document.getElementById('btn-crouch').innerText = t.crouch;
+            document.getElementById('btn-jump').innerText = t.jump;
+
+            document.querySelector('#app-mail .app-name').innerText = t.appNameMail;
+            document.querySelector('#app-msg .app-name').innerText = t.appNameMsg;
+            document.querySelector('#app-contacts .app-name').innerText = t.appNameContacts;
+            document.querySelector('#app-web .app-name').innerText = t.appNameWeb;
+            document.querySelector('#app-camera .app-name').innerText = t.appNameCamera;
+            document.querySelector('#app-settings .app-name').innerText = t.appNameSettings;
+
+            const modeText = document.getElementById('mode-indicator');
+            const actionBtn = document.getElementById('btn-action');
+            if (isDriving) {
+                modeText.innerText = t.driveMode;
+                actionBtn.innerText = t.getOff;
+            } else {
+                modeText.innerText = t.walkMode;
+                actionBtn.innerText = t.getOn;
+            }
+        }
+
+        function updateSteeringUI() {
+            const btnGroup = document.getElementById('steering-buttons');
+            const wheelContainer = document.getElementById('steering-wheel-container');
+            if (!gameStarted) return;
+            if (gameSettings.steerMode === 'wheel') {
+                btnGroup.style.display = 'none';
+                wheelContainer.style.display = 'block';
+            } else {
+                btnGroup.style.display = 'flex';
+                wheelContainer.style.display = 'none';
+            }
+        }
+
+        const shelfData = {
+            fruit: {
+                name: '生鮮水果架',
+                items: [
+                    { id: 'apple', name: '紅蘋果', icon: '🍎' },
+                    { id: 'banana', name: '香蕉', icon: '🍌' },
+                    { id: 'watermelon', name: '西瓜', icon: '🍉' }
+                ]
+            },
+            food: {
+                name: '速食熟食架',
+                items: [
+                    { id: 'burger', name: '美味漢堡', icon: '🍔' },
+                    { id: 'pizza', name: '披薩切片', icon: '🍕' },
+                    { id: 'donut', name: '甜甜圈', icon: '🍩' }
+                ]
+            },
+            drink: {
+                name: '飲料冰品架',
+                items: [
+                    { id: 'cola', name: '冰涼可樂', icon: '🥤' },
+                    { id: 'coffee', name: '美式咖啡', icon: '☕' },
+                    { id: 'icecream', name: '霜淇淋', icon: '🍦' }
+                ]
+            }
+        };
+
+        const allItemsList = [
+            { id: 'apple', name: '紅蘋果', icon: '🍎' },
+            { id: 'banana', name: '香蕉', icon: '🍌' },
+            { id: 'watermelon', name: '西瓜', icon: '🍉' },
+            { id: 'burger', name: '美味漢堡', icon: '🍔' },
+            { id: 'pizza', name: '披薩切片', icon: '🍕' },
+            { id: 'donut', name: '甜甜圈', icon: '🍩' },
+            { id: 'cola', name: '冰涼可樂', icon: '🥤' },
+            { id: 'coffee', name: '美式咖啡', icon: '☕' },
+            { id: 'icecream', name: '霜淇淋', icon: '🍦' }
+        ];
+
+        let inventory = { 'apple': 2, 'cola': 1 };
+
+        function updateBackpackUI() {
+            const grid = document.getElementById('backpack-grid');
+            grid.innerHTML = '';
+            let empty = true;
+            for (let id in inventory) {
+                if (inventory[id] > 0) {
+                    empty = false;
+                    const item = allItemsList.find(i => i.id === id);
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `<div class="item-icon">${item.icon}</div>
+                                      <div class="item-name">${item.name}</div>
+                                      <div class="item-count">x${inventory[id]}</div>`;
+                    card.onclick = () => useItem(id);
+                    grid.appendChild(card);
+                }
+            }
+            if (empty) {
+                grid.innerHTML = '<div style="grid-column: span 3; text-align:center; color:#94a3b8; padding:20px;">背包是空的</div>';
+            }
+        }
+
+        function useItem(id) {
+            if (inventory[id] && inventory[id] > 0) {
+                inventory[id]--;
+                const item = allItemsList.find(i => i.id === id);
+                alert(`使用了 ${item.name}！`);
+                updateBackpackUI();
+            }
+        }
+
+        function openShelfUI(shelfKey) {
+            const shelf = shelfData[shelfKey];
+            document.getElementById('shelf-title').innerText = shelf.name;
+            const grid = document.getElementById('shelf-grid');
+            grid.innerHTML = '';
+            shelf.items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `<div class="item-icon">${item.icon}</div>
+                                  <div class="item-name">${item.name}</div>
+                                  <div class="item-count" style="color:#f59e0b;">拿取/購買</div>`;
+                card.onclick = () => buyItem(item.id);
+                grid.appendChild(card);
+            });
+            document.getElementById('shelf-modal').style.display = 'block';
+        }
+
+        function buyItem(id) {
+            inventory[id] = (inventory[id] || 0) + 1;
+            const item = allItemsList.find(i => i.id === id);
+            alert(`獲得 ${item.name}，已放入背包！`);
+            updateBackpackUI();
+        }
+
+        // --- 場景初始化 ---
+        const scene = new THREE.Scene();
+        const menuBgColor = new THREE.Color(0x07090e);
+        scene.background = menuBgColor;
+        scene.fog = new THREE.Fog(0x07090e, 30, 450);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 800);
+        const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "high-performance", preserveDrawingBuffer: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('game-overlay').appendChild(renderer.domElement);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(60, 100, 40);
+        scene.add(dirLight);
+
+        // 建立開放世界整體容器 Group
+        const worldGroup = new THREE.Group();
+        worldGroup.visible = false;
+        scene.add(worldGroup);
+
+        // 建立展示選單專用的圓形旋轉展台裝飾
+        const menuPlatformGroup = new THREE.Group();
+        const platformBaseGeo = new THREE.CylinderGeometry(6, 6.2, 0.4, 32);
+        const platformBaseMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8, roughness: 0.2 });
+        const platformBase = new THREE.Mesh(platformBaseGeo, platformBaseMat);
+        platformBase.position.y = -0.2;
+        menuPlatformGroup.add(platformBase);
+
+        const ringGeo = new THREE.RingGeometry(5.8, 6.3, 64);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x6366f1, side: THREE.DoubleSide });
+        const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+        ringMesh.rotation.x = -Math.PI / 2;
+        ringMesh.position.y = 0.02;
+        menuPlatformGroup.add(ringMesh);
+
+        scene.add(menuPlatformGroup);
+
+        let cameraYaw = 0;
+        let cameraPitch = 0.2;
+        let cameraDistance = 12;
+        let isDraggingCamera = false;
+        let previousMouseX = 0;
+        let previousMouseY = 0;
+
+        window.addEventListener('pointerdown', (e) => {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('.touch-btn') || 
+                e.target.closest('.modal-panel') || e.target.closest('.grid-modal') || 
+                e.target.closest('#phone-wrapper') || e.target.closest('#joystick-container') ||
+                e.target.closest('#steering-wheel-container') || e.target.closest('#weapon-wheel-overlay') ||
+                e.target.closest('#interact-prompt') || e.target.closest('#close-game-btn') ||
+                e.target.closest('#start-screen')) {
+                return;
+            }
+            isDraggingCamera = true;
+            previousMouseX = e.clientX;
+            previousMouseY = e.clientY;
+        });
+
+        window.addEventListener('pointermove', (e) => {
+            if (!isDraggingCamera) return;
+            const deltaX = e.clientX - previousMouseX;
+            const deltaY = e.clientY - previousMouseY;
+
+            cameraYaw -= deltaX * 0.005;
+            cameraPitch += deltaY * 0.005;
+            cameraPitch = Math.max(-0.2, Math.min(Math.PI / 2.2, cameraPitch));
+
+            previousMouseX = e.clientX;
+            previousMouseY = e.clientY;
+        });
+
+        const stopDrag = () => { isDraggingCamera = false; };
+        window.addEventListener('pointerup', stopDrag);
+        window.addEventListener('pointercancel', stopDrag);
+
+        let currentWeather = { isRaining: false, isCloudy: false, isFoggy: false, temp: 25, code: 0 };
+        let rainParticles = null;
+
+        function setupRainEffect() {
+            const particleCount = 2000;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 600;
+                positions[i + 1] = Math.random() * 40;
+                positions[i + 2] = (Math.random() - 0.5) * 600;
+            }
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const material = new THREE.PointsMaterial({ color: 0x94a3b8, size: 0.35, transparent: true, opacity: 0.6 });
+            rainParticles = new THREE.Points(geometry, material);
+            rainParticles.visible = false;
+            worldGroup.add(rainParticles);
+        }
+        setupRainEffect();
+
+        function updateRain() {
+            if (rainParticles && rainParticles.visible) {
+                const positions = rainParticles.geometry.attributes.position.array;
+                for (let i = 1; i < positions.length; i += 3) {
+                    positions[i] -= 0.9;
+                    if (positions[i] < 0) positions[i] = 40;
+                }
+                rainParticles.geometry.attributes.position.needsUpdate = true;
+            }
+        }
+
+        const streetLightSources = [];
+
+        function syncSunAndSkyWithTime() {
+            if (!gameStarted) return { hours: 12, isNight: false };
+            const now = new Date();
+            const hours = now.getHours() + now.getMinutes() / 60;
+            
+            let skyColor, lightColor, lightIntensity, ambIntensity;
+            let sunAngle = ((hours - 6) / 24) * Math.PI * 2;
+            
+            dirLight.position.x = Math.cos(sunAngle) * 150;
+            dirLight.position.y = Math.sin(sunAngle) * 150;
+            dirLight.position.z = 40;
+
+            if (hours >= 5 && hours < 8) {
+                skyColor = new THREE.Color(0xfdba74); lightColor = new THREE.Color(0xffedd5); lightIntensity = 0.7; ambIntensity = 0.5;
+            } else if (hours >= 8 && hours < 16.5) {
+                skyColor = new THREE.Color(0x38bdf8); lightColor = new THREE.Color(0xffffff); lightIntensity = 1.0; ambIntensity = 0.75;
+            } else if (hours >= 16.5 && hours < 19) {
+                skyColor = new THREE.Color(0xf97316); lightColor = new THREE.Color(0xfed7aa); lightIntensity = 0.6; ambIntensity = 0.45;
+            } else {
+                skyColor = new THREE.Color(0x090d16); lightColor = new THREE.Color(0x38bdf8); lightIntensity = 0.15; ambIntensity = 0.2;
+            }
+
+            if (currentWeather.isCloudy || currentWeather.isRaining) {
+                skyColor.lerp(new THREE.Color(0x475569), 0.5);
+                lightIntensity *= 0.6;
+            }
+
+            scene.background.copy(skyColor);
+            scene.fog.color.copy(skyColor);
+            dirLight.color.copy(lightColor);
+            dirLight.intensity = lightIntensity;
+            ambientLight.intensity = ambIntensity;
+
+            const isNight = hours < 6 || hours >= 18;
+            vehicleLightsList.forEach(light => light.visible = isNight);
+            streetLightSources.forEach(light => light.visible = isNight);
+
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('phone-clock').innerText = timeStr;
+            return { hours, isNight };
+        }
+
+        async function fetchRealWeather() {
+            try {
+                navigator.geolocation.getCurrentPosition(async (pos) => {
+                    await getWeather(pos.coords.latitude, pos.coords.longitude);
+                }, async () => { await getWeather(25.03, 121.56); });
+            } catch(e) { await getWeather(25.03, 121.56); }
+        }
+
+        async function getWeather(lat, lon) {
+            try {
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+                const data = await res.json();
+                const cw = data.current_weather;
+                currentWeather.temp = cw.temperature;
+                currentWeather.code = cw.weathercode;
+                currentWeather.isRaining = (cw.weathercode >= 51 && cw.weathercode <= 67) || (cw.weathercode >= 80 && cw.weathercode <= 82) || cw.weathercode >= 95;
+                currentWeather.isCloudy = cw.weathercode === 2 || cw.weathercode === 3;
+                currentWeather.isFoggy = cw.weathercode === 45 || cw.weathercode === 48;
+
+                rainParticles.visible = currentWeather.isRaining;
+                scene.fog.near = currentWeather.isFoggy ? 10 : 30;
+                scene.fog.far = currentWeather.isFoggy ? 100 : 450;
+
+                let desc = gameSettings.lang === 'zh' ? "晴朗" : "Clear";
+                if (currentWeather.isRaining) desc = gameSettings.lang === 'zh' ? "下雨 🌧️" : "Rain 🌧️";
+                else if (currentWeather.isCloudy) desc = gameSettings.lang === 'zh' ? "多雲 ☁️" : "Cloudy ☁️";
+                else if (currentWeather.isFoggy) desc = gameSettings.lang === 'zh' ? "大霧" : "Foggy";
+                
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                document.getElementById('weather-hud').innerText = `時間: ${timeStr} | 氣溫: ${cw.temperature}°C | ${desc}`;
+            } catch(e) { document.getElementById('weather-hud').innerText = translations[gameSettings.lang].weatherDefault; }
+        }
+        fetchRealWeather();
+        setInterval(fetchRealWeather, 300000);
+
+        function createBuildingTexture(windowColor) {
+            const canvas = document.createElement('canvas'); canvas.width = 64; canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#1e293b'; ctx.fillRect(0, 0, 64, 128);
+            ctx.fillStyle = windowColor;
+            for (let y = 6; y < 122; y += 12) {
+                for (let x = 6; x < 58; x += 12) { if (Math.random() > 0.35) ctx.fillRect(x, y, 6, 6); }
+            }
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        const bMaterialsArr = [
+            [
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#38bdf8') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#fbbf24') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#f43f5e') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#34d399') })
+            ],
+            [
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#c084fc') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#f472b6') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#2dd4bf') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#a3e635') })
+            ],
+            [
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#fb923c') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#38bdf8') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#a855f7') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#facc15') })
+            ],
+            [
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#4ade80') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#ef4444') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#06b6d4') }),
+                new THREE.MeshLambertMaterial({ map: createBuildingTexture('#ec4899') })
+            ]
+        ];
+
+        const buildings = [], obstacles = [], trafficLightsList = [], vehicleLightsList = [], roadCenters = [], sidewalksList = [];
+        const interactiveShelves = [];
+        let marketDoorArea = null;
+        let policeDoorArea = null;
+
+        const roadWidth = 24, blockSize = 60, step = roadWidth + blockSize, cityGridCount = 4;
+        const roadMat = new THREE.MeshLambertMaterial({ color: 0x111827 });
+        const lineMat = new THREE.MeshBasicMaterial({ color: 0xeab308 });
+        const sidewalkMat = new THREE.MeshLambertMaterial({ color: 0x475569 });
+
+        const citySize = cityGridCount * step + roadWidth;
+        const bridgeLength = 180;
+
+        const distanceX = citySize + bridgeLength;
+        const distanceZ = citySize + bridgeLength;
+
+        const cityCenters = [
+            { x: 0, z: 0, type: 'dunes' },
+            { x: distanceX, z: 0, type: 'forest' },
+            { x: distanceX, z: distanceZ, type: 'city' },
+            { x: 0, z: distanceZ, type: 'city' }
+        ];
+
+        const sea = new THREE.Mesh(new THREE.PlaneGeometry(3000, 3000), new THREE.MeshLambertMaterial({ color: 0x0284c7 }));
+        sea.rotation.x = -Math.PI / 2; sea.position.y = -0.5; worldGroup.add(sea);
+
+        const boxGeo = new THREE.BoxGeometry(1, 1, 1);
+
+        function createProductTexture(colorStr, text) {
+            const canvas = document.createElement('canvas'); canvas.width = 128; canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = colorStr; ctx.fillRect(0, 0, 128, 128);
+            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 20px Arial'; ctx.textAlign = 'center'; ctx.fillText(text, 64, 70);
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        const texSoda = createProductTexture('#3388ff', 'SODA');
+        const texCola = createProductTexture('#ff3333', 'COLA');
+        const texJuice = createProductTexture('#ffa500', 'JUICE');
+        const texSnack = createProductTexture('#33cc55', 'SNACK');
+
+        const matSteel = new THREE.MeshStandardMaterial({ color: 0x444444, metalness: 0.6 });
+        const matShelfBoard = new THREE.MeshStandardMaterial({ color: 0xf0f0f0 });
+
+        function createRealShelf(shelfWidth, shelfHeight, shelfDepth, layers) {
+            const group = new THREE.Group();
+            const postGeo = new THREE.CylinderGeometry(0.04, 0.04, shelfHeight, 8);
+            
+            [[-shelfWidth/2+0.05, shelfHeight/2, -shelfDepth/2+0.05],
+             [ shelfWidth/2-0.05, shelfHeight/2, -shelfDepth/2+0.05],
+             [-shelfWidth/2+0.05, shelfHeight/2,  shelfDepth/2-0.05],
+             [ shelfWidth/2-0.05, shelfHeight/2,  shelfDepth/2-0.05]].forEach(pos => {
+                const post = new THREE.Mesh(postGeo, matSteel);
+                post.position.set(...pos); group.add(post);
+            });
+
+            const backMesh = new THREE.Mesh(new THREE.BoxGeometry(shelfWidth, shelfHeight, 0.02), matSteel);
+            backMesh.position.set(0, shelfHeight/2, -shelfDepth/2); group.add(backMesh);
+
+            const layerHeight = shelfHeight / layers;
+            const boardGeo = new THREE.BoxGeometry(shelfWidth, 0.04, shelfDepth);
+
+            for (let i = 0; i <= layers; i++) {
+                const y = i * layerHeight + 0.02;
+                const board = new THREE.Mesh(boardGeo, matShelfBoard);
+                board.position.set(0, y, 0); group.add(board);
+
+                if (i < layers) {
+                    const cols = Math.floor(shelfWidth / 0.35);
+                    for (let r = 0; r < 2; r++) {
+                        for (let c = 0; c < cols; c++) {
+                            const itemX = -shelfWidth/2 + 0.2 + c * 0.35;
+                            const itemZ = -shelfDepth/2 + 0.25 + r * 0.35;
+                            let prod;
+                            const rand = (i + c + r) % 4;
+                            if (rand === 0) prod = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.35, 12), new THREE.MeshStandardMaterial({ map: texSoda }));
+                            else if (rand === 1) prod = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.3, 12), new THREE.MeshStandardMaterial({ map: texCola }));
+                            else if (rand === 2) prod = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.4, 0.15), new THREE.MeshStandardMaterial({ map: texJuice }));
+                            else prod = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.3, 0.2), new THREE.MeshStandardMaterial({ map: texSnack }));
+                            
+                            prod.position.set(itemX, y + 0.15, itemZ);
+                            group.add(prod);
+                        }
+                    }
+                }
+            }
+            return group;
+        }
+
+        function createWalkInMarket(bx, bz, width, depth) {
+            const storeGroup = new THREE.Group();
+            storeGroup.position.set(bx, 0, bz);
+
+            const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xc47a68 });
+            const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xdedede });
+
+            const backWall = new THREE.Mesh(new THREE.BoxGeometry(width, 6, 0.3), wallMaterial);
+            backWall.position.set(0, 3, -depth/2); storeGroup.add(backWall);
+            backWall.userData = { minX: bx - width/2, maxX: bx + width/2, minZ: bz - depth/2 - 0.15, maxZ: bz - depth/2 + 0.15 };
+            obstacles.push(backWall);
+
+            const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.3, 6, depth), wallMaterial);
+            leftWall.position.set(-width/2, 3, 0); storeGroup.add(leftWall);
+            leftWall.userData = { minX: bx - width/2 - 0.15, maxX: bx - width/2 + 0.15, minZ: bz - depth/2, maxZ: bz + depth/2 };
+            obstacles.push(leftWall);
+
+            const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.3, 6, depth), wallMaterial);
+            rightWall.position.set(width/2, 3, 0); storeGroup.add(rightWall);
+            rightWall.userData = { minX: bx + width/2 - 0.15, maxX: bx + width/2 + 0.15, minZ: bz - depth/2, maxZ: bz + depth/2 };
+            obstacles.push(rightWall);
+
+            const roof = new THREE.Mesh(new THREE.BoxGeometry(width + 0.6, 0.3, depth + 0.6), wallMaterial);
+            roof.position.set(0, 6.1, 0); storeGroup.add(roof);
+
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(width, depth), floorMaterial);
+            floor.rotation.x = -Math.PI / 2; floor.position.set(0, 0.01, 0); storeGroup.add(floor);
+
+            const glassMaterial = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.35, roughness: 0.1, transmission: 0.9, thickness: 0.5 });
+            const frontGlassLeft = new THREE.Mesh(new THREE.BoxGeometry((width - 4) / 2, 4.5, 0.1), glassMaterial); frontGlassLeft.position.set(-width/4 - 1, 2.25, depth/2); storeGroup.add(frontGlassLeft);
+            const frontGlassRight = new THREE.Mesh(new THREE.BoxGeometry((width - 4) / 2, 4.5, 0.1), glassMaterial); frontGlassRight.position.set(width/4 + 1, 2.25, depth/2); storeGroup.add(frontGlassRight);
+            const mainDoor = new THREE.Mesh(new THREE.BoxGeometry(4, 4.5, 0.1), glassMaterial); mainDoor.position.set(0, 2.25, depth/2); storeGroup.add(mainDoor);
+            const frontTopWall = new THREE.Mesh(new THREE.BoxGeometry(width, 1.5, 0.3), wallMaterial); frontTopWall.position.set(0, 5.25, depth/2); storeGroup.add(frontTopWall);
+
+            const signCanvas = document.createElement('canvas'); signCanvas.width = 512; signCanvas.height = 128;
+            const sCtx = signCanvas.getContext('2d');
+            sCtx.fillStyle = '#cc0000'; sCtx.fillRect(0, 0, 512, 128);
+            sCtx.fillStyle = '#ffffff'; sCtx.font = 'bold 56px Arial'; sCtx.textAlign = 'center'; sCtx.textBaseline = 'middle'; sCtx.fillText('SUPERMARKET', 256, 64);
+
+            const signMesh = new THREE.Mesh(new THREE.BoxGeometry(width * 0.7, 1.5, 0.2), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(signCanvas) }));
+            signMesh.position.set(0, 5.25, depth/2 + 0.2); storeGroup.add(signMesh);
+
+            const intLight1 = new THREE.PointLight(0xffffff, 1.2, 20); intLight1.position.set(-width/4, 5, 0); storeGroup.add(intLight1);
+            const intLight2 = new THREE.PointLight(0xffffff, 1.2, 20); intLight2.position.set(width/4, 5, 0); storeGroup.add(intLight2);
+
+            const shelvesConfig = [
+                { key: 'fruit', name: '生鮮水果架', x: -width/4, z: -depth/4 },
+                { key: 'food',  name: '速食熟食架', x: 0,        z: -depth/4 },
+                { key: 'drink', name: '飲料冰品架', x: -width/4, z: depth/6 }
+            ];
+
+            shelvesConfig.forEach(conf => {
+                const shelfMesh = createRealShelf(3.2, 2.8, 0.8, 4); shelfMesh.position.set(conf.x, 0, conf.z); storeGroup.add(shelfMesh);
+                const shelfObstacle = new THREE.Mesh(boxGeo, matSteel); shelfObstacle.visible = false;
+                shelfObstacle.scale.set(3.2, 2.8, 0.8); shelfObstacle.position.set(conf.x, 1.4, conf.z); storeGroup.add(shelfObstacle);
+                shelfObstacle.userData = { minX: bx + conf.x - 1.6, maxX: bx + conf.x + 1.6, minZ: bz + conf.z - 0.4, maxZ: bz + conf.z + 0.4 };
+                obstacles.push(shelfObstacle);
+
+                interactiveShelves.push({ key: conf.key, name: conf.name, worldPos: new THREE.Vector3(bx + conf.x, 0, bz + conf.z), radius: 3.5 });
+            });
+
+            const counterGroup = new THREE.Group();
+            const counterBase = new THREE.Mesh(new THREE.BoxGeometry(3.5, 1.1, 1.4), new THREE.MeshStandardMaterial({ color: 0xeeeeee })); counterBase.position.set(0, 0.55, 0); counterGroup.add(counterBase);
+            const posScreen = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 0.1), new THREE.MeshStandardMaterial({ color: 0x111111 })); posScreen.position.set(0.5, 1.3, 0); counterGroup.add(posScreen);
+            counterGroup.position.set(width/4, 0, depth/4); storeGroup.add(counterGroup);
+            counterBase.userData = { minX: bx + width/4 - 1.75, maxX: bx + width/4 + 1.75, minZ: bz + depth/4 - 0.7, maxZ: bz + depth/4 + 0.7 };
+            obstacles.push(counterBase);
+
+            worldGroup.add(storeGroup);
+            marketDoorArea = { x: bx, z: bz + depth/2 + 2, radius: 4.0 };
+        }
+
+        function createNoticeBoardTexture() {
+            const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#b48356'; ctx.fillRect(0, 0, 512, 256);
+            ctx.strokeStyle = '#5c3a21'; ctx.lineWidth = 12; ctx.strokeRect(0, 0, 512, 256);
+            ctx.fillStyle = '#d4c5a9'; ctx.fillRect(60, 30, 220, 190); ctx.strokeStyle = '#8c7b60'; ctx.lineWidth = 2; ctx.strokeRect(60, 30, 220, 190);
+            ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(90, 60); ctx.lineTo(200, 160); ctx.lineTo(130, 180); ctx.stroke();
+            const notes = [
+                {x: 20, y: 30, w: 30, h: 30, c: '#fef08a'}, {x: 290, y: 40, w: 40, h: 40, c: '#fef08a'},
+                {x: 350, y: 50, w: 35, h: 35, c: '#fef08a'}, {x: 420, y: 80, w: 30, h: 40, c: '#fef08a'},
+                {x: 300, y: 150, w: 45, h: 35, c: '#fef08a'}, {x: 380, y: 170, w: 35, h: 35, c: '#fef08a'}
+            ];
+            notes.forEach(n => { ctx.fillStyle = n.c; ctx.fillRect(n.x, n.y, n.w, n.h); ctx.fillStyle = '#000'; ctx.fillRect(n.x + 5, n.y + 5, n.w - 10, 2); });
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        function createWalkInPoliceStation(bx, bz, width, depth) {
+            const policeGroup = new THREE.Group();
+            policeGroup.position.set(bx, 0, bz);
+
+            const exteriorWallMat = new THREE.MeshStandardMaterial({ color: 0x1d4ed8, roughness: 0.7 });
+            const interiorWallMat = new THREE.MeshStandardMaterial({ color: 0x5c3a21, roughness: 0.8 });
+            const woodWallMat = new THREE.MeshStandardMaterial({ color: 0x4a2e18, roughness: 0.6 });
+            const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x3d2314, roughness: 0.5 });
+
+            const backWall = new THREE.Mesh(new THREE.BoxGeometry(width, 6, 0.3), exteriorWallMat); backWall.position.set(0, 3, -depth/2); policeGroup.add(backWall);
+            backWall.userData = { minX: bx - width/2, maxX: bx + width/2, minZ: bz - depth/2 - 0.15, maxZ: bz - depth/2 + 0.15 };
+            obstacles.push(backWall);
+
+            const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.3, 6, depth), exteriorWallMat); leftWall.position.set(-width/2, 3, 0); policeGroup.add(leftWall);
+            leftWall.userData = { minX: bx - width/2 - 0.15, maxX: bx - width/2 + 0.15, minZ: bz - depth/2, maxZ: bz + depth/2 };
+            obstacles.push(leftWall);
+
+            const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.3, 6, depth), exteriorWallMat); rightWall.position.set(width/2, 3, 0); policeGroup.add(rightWall);
+            rightWall.userData = { minX: bx + width/2 - 0.15, maxX: bx + width/2 + 0.15, minZ: bz - depth/2, maxZ: bz + depth/2 };
+            obstacles.push(rightWall);
+
+            const innerBackWall = new THREE.Mesh(new THREE.BoxGeometry(width - 0.1, 6, 0.05), interiorWallMat); innerBackWall.position.set(0, 3, -depth/2 + 0.16); policeGroup.add(innerBackWall);
+            const innerLeftWall = new THREE.Mesh(new THREE.BoxGeometry(0.05, 6, depth - 0.1), interiorWallMat); innerLeftWall.position.set(-width/2 + 0.16, 3, 0); policeGroup.add(innerLeftWall);
+            const innerRightWall = new THREE.Mesh(new THREE.BoxGeometry(0.05, 6, depth - 0.1), interiorWallMat); innerRightWall.position.set(width/2 - 0.16, 3, 0); policeGroup.add(innerRightWall);
+
+            const wainscotBack = new THREE.Mesh(new THREE.BoxGeometry(width - 0.1, 2.2, 0.1), woodWallMat); wainscotBack.position.set(0, 1.1, -depth/2 + 0.2); policeGroup.add(wainscotBack);
+            const wainscotRight = new THREE.Mesh(new THREE.BoxGeometry(0.1, 2.2, depth - 0.1), woodWallMat); wainscotRight.position.set(width/2 - 0.2, 1.1, 0); policeGroup.add(wainscotRight);
+
+            const roof = new THREE.Mesh(new THREE.BoxGeometry(width + 0.6, 0.3, depth + 0.6), exteriorWallMat); roof.position.set(0, 6.1, 0); policeGroup.add(roof);
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(width, depth), floorMaterial); floor.rotation.x = -Math.PI / 2; floor.position.set(0, 0.01, 0); policeGroup.add(floor);
+
+            const glassMaterial = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.35, roughness: 0.1, transmission: 0.9 });
+            const frontGlassLeft = new THREE.Mesh(new THREE.BoxGeometry((width - 4) / 2, 4.5, 0.1), glassMaterial); frontGlassLeft.position.set(-width/4 - 1, 2.25, depth/2); policeGroup.add(frontGlassLeft);
+            const frontGlassRight = new THREE.Mesh(new THREE.BoxGeometry((width - 4) / 2, 4.5, 0.1), glassMaterial); frontGlassRight.position.set(width/4 + 1, 2.25, depth/2); policeGroup.add(frontGlassRight);
+            const mainDoor = new THREE.Mesh(new THREE.BoxGeometry(4, 4.5, 0.1), glassMaterial); mainDoor.position.set(0, 2.25, depth/2); policeGroup.add(mainDoor);
+            const frontTopWall = new THREE.Mesh(new THREE.BoxGeometry(width, 1.5, 0.3), exteriorWallMat); frontTopWall.position.set(0, 5.25, depth/2); policeGroup.add(frontTopWall);
+
+            const signCanvas = document.createElement('canvas'); signCanvas.width = 512; signCanvas.height = 128;
+            const sCtx = signCanvas.getContext('2d');
+            sCtx.fillStyle = '#1d4ed8'; sCtx.fillRect(0, 0, 512, 128);
+            sCtx.fillStyle = '#ffffff'; sCtx.font = 'bold 48px Arial'; sCtx.textAlign = 'center'; sCtx.textBaseline = 'middle'; sCtx.fillText('POLICE STATION', 256, 64);
+            const signMesh = new THREE.Mesh(new THREE.BoxGeometry(width * 0.7, 1.5, 0.2), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(signCanvas) }));
+            signMesh.position.set(0, 5.25, depth/2 + 0.2); policeGroup.add(signMesh);
+
+            const darkWoodMat = new THREE.MeshStandardMaterial({ color: 0x3d2314, roughness: 0.4 });
+            const deskMat = new THREE.MeshStandardMaterial({ color: 0x7c3a1d, roughness: 0.3 });
+            const metalMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.8 });
+
+            const deskGroup = new THREE.Group();
+            const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.2, 2.2), deskMat); deskTop.position.y = 1.4;
+            const deskBody = new THREE.Mesh(new THREE.BoxGeometry(4.0, 1.3, 2.0), darkWoodMat); deskBody.position.y = 0.65;
+            deskGroup.add(deskTop, deskBody); deskGroup.position.set(-1.0, 0, -2.0); policeGroup.add(deskGroup);
+
+            const deskObs = new THREE.Mesh(boxGeo, deskMat); deskObs.visible = false;
+            deskObs.scale.set(4.2, 1.4, 2.2); deskObs.position.set(-1.0, 0.7, -2.0); policeGroup.add(deskObs);
+            deskObs.userData = { minX: bx - 3.1, maxX: bx + 1.1, minZ: bz - 3.1, maxZ: bz - 0.9 };
+            obstacles.push(deskObs);
+
+            const lampBase = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 0.4), metalMat); lampBase.position.set(-1.5, 1.6, -2.0);
+            const lampLight = new THREE.PointLight(0xfef08a, 1.8, 8); lampLight.position.set(-1.5, 1.8, -2.0); deskGroup.add(lampBase, lampLight);
+            const phoneMesh = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.2, 0.3), new THREE.MeshLambertMaterial({color: 0x111111})); phoneMesh.position.set(0.2, 1.5, -2.2); deskGroup.add(phoneMesh);
+
+            const rug = new THREE.Mesh(new THREE.PlaneGeometry(5.0, 3.5), new THREE.MeshStandardMaterial({ color: 0x881337, roughness: 0.9 }));
+            rug.rotation.x = -Math.PI / 2; rug.position.set(-1.0, 0.02, -1.8); policeGroup.add(rug);
+
+            const createChair = (x, z, rot) => {
+                const chair = new THREE.Group();
+                const seat = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.1, 0.8), metalMat); seat.position.y = 0.8;
+                const back = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.1), metalMat); back.position.set(0, 1.2, -0.35);
+                chair.add(seat, back); chair.position.set(x, 0, z); chair.rotation.y = rot; policeGroup.add(chair);
+            };
+            createChair(-2.2, -0.2, 0.2); createChair(0.2, -0.2, -0.2);
+
+            const noticeBoard = new THREE.Mesh(new THREE.PlaneGeometry(5.0, 2.5), new THREE.MeshBasicMaterial({ map: createNoticeBoardTexture() }));
+            noticeBoard.position.set(width/2 - 0.22, 3.2, 0); noticeBoard.rotation.y = -Math.PI / 2; policeGroup.add(noticeBoard);
+
+            const cabinet = new THREE.Mesh(new THREE.BoxGeometry(1.4, 3.8, 1.2), new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.5 }));
+            cabinet.position.set(width/2 - 1.2, 1.9, -depth/2 + 1.2); policeGroup.add(cabinet);
+            cabinet.userData = { minX: bx + width/2 - 2.0, maxX: bx + width/2 - 0.4, minZ: bz - depth/2 + 0.5, maxZ: bz - depth/2 + 1.9 };
+            obstacles.push(cabinet);
+
+            const ambientWarm = new THREE.PointLight(0xfef08a, 1.2, 25); ambientWarm.position.set(0, 5.0, 0); policeGroup.add(ambientWarm);
+
+            worldGroup.add(policeGroup);
+            policeDoorArea = { x: bx, z: bz + depth/2 + 2, radius: 4.0 };
+        }
+
+        function getDuneHeight(x, z) {
+            return Math.sin(x * 0.05) * Math.cos(z * 0.05) * 4 + Math.sin(x * 0.02) * 6;
+        }
+
+        function buildDunes(offsetX, offsetZ) {
+            const startPosX = offsetX - (citySize / 2);
+            const startPosZ = offsetZ - (citySize / 2);
+
+            const sandMat = new THREE.MeshStandardMaterial({ color: 0xeab308, roughness: 0.9 });
+            const duneGround = new THREE.Mesh(new THREE.PlaneGeometry(citySize, citySize, 32, 32), sandMat);
+            duneGround.rotation.x = -Math.PI / 2;
+            duneGround.position.set(offsetX, 0, offsetZ);
+            
+            const posAttr = duneGround.geometry.attributes.position;
+            for(let i = 0; i < posAttr.count; i++) {
+                let lx = posAttr.getX(i);
+                let ly = posAttr.getY(i);
+                let worldX = offsetX + lx;
+                let worldZ = offsetZ - ly; 
+                let zNoise = getDuneHeight(worldX, worldZ);
+                posAttr.setZ(i, zNoise);
+            }
+            duneGround.geometry.computeVertexNormals();
+            worldGroup.add(duneGround);
+
+            for (let i = 0; i <= cityGridCount; i++) {
+                const posX = startPosX + i * step + roadWidth / 2;
+                const posZ = startPosZ + i * step + roadWidth / 2;
+                if(i === 0 || i === cityGridCount) {
+                    const vRoad = new THREE.Mesh(new THREE.PlaneGeometry(roadWidth, citySize), roadMat);
+                    vRoad.rotation.x = -Math.PI / 2; vRoad.position.set(posX, 0.1, offsetZ); worldGroup.add(vRoad);
+                    const hRoad = new THREE.Mesh(new THREE.PlaneGeometry(citySize, roadWidth), roadMat);
+                    hRoad.rotation.x = -Math.PI / 2; hRoad.position.set(offsetX, 0.1, posZ); worldGroup.add(hRoad);
+                }
+            }
+
+            const cactusMat = new THREE.MeshLambertMaterial({ color: 0x15803d });
+            const rockMat = new THREE.MeshStandardMaterial({ color: 0x854d0e, roughness: 0.8 });
+
+            for(let i = 0; i < 35; i++) {
+                const rx = offsetX + (Math.random() - 0.5) * (citySize - 30);
+                const rz = offsetZ + (Math.random() - 0.5) * (citySize - 30);
+                const groundY = getDuneHeight(rx, rz);
+
+                if(Math.random() > 0.4) {
+                    const cacGroup = new THREE.Group();
+                    const mainStem = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 5, 8), cactusMat);
+                    mainStem.position.y = 2.5; cacGroup.add(mainStem);
+                    const arm1 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 2.5, 8), cactusMat);
+                    arm1.position.set(1, 3, 0); arm1.rotation.z = -Math.PI/3; cacGroup.add(arm1);
+                    cacGroup.position.set(rx, groundY, rz);
+                    worldGroup.add(cacGroup);
+                    
+                    const obs = new THREE.Mesh(boxGeo, cactusMat); obs.visible = false;
+                    obs.scale.set(2, 5, 2); obs.position.set(rx, groundY + 2.5, rz); worldGroup.add(obs);
+                    obs.userData = { minX: rx - 1, maxX: rx + 1, minZ: rz - 1, maxZ: rz + 1 };
+                    obstacles.push(obs);
+                } else {
+                    const rScale = 3 + Math.random() * 5;
+                    const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(rScale), rockMat);
+                    rock.position.set(rx, groundY + rScale * 0.5, rz);
+                    worldGroup.add(rock);
+                    rock.userData = { minX: rx - rScale, maxX: rx + rScale, minZ: rz - rScale, maxZ: rz + rScale };
+                    obstacles.push(rock);
+                }
+            }
+        }
+
+        function buildForest(offsetX, offsetZ) {
+            const startPosX = offsetX - (citySize / 2);
+            const startPosZ = offsetZ - (citySize / 2);
+
+            const grassMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.8 });
+            const forestGround = new THREE.Mesh(new THREE.PlaneGeometry(citySize, citySize), grassMat);
+            forestGround.rotation.x = -Math.PI / 2;
+            forestGround.position.set(offsetX, 0, offsetZ);
+            worldGroup.add(forestGround);
+
+            for (let i = 0; i <= cityGridCount; i++) {
+                const posX = startPosX + i * step + roadWidth / 2;
+                const posZ = startPosZ + i * step + roadWidth / 2;
+                if(i === 0 || i === cityGridCount) {
+                    const vRoad = new THREE.Mesh(new THREE.PlaneGeometry(roadWidth, citySize), roadMat);
+                    vRoad.rotation.x = -Math.PI / 2; vRoad.position.set(posX, 0.05, offsetZ); worldGroup.add(vRoad);
+                    const hRoad = new THREE.Mesh(new THREE.PlaneGeometry(citySize, roadWidth), roadMat);
+                    hRoad.rotation.x = -Math.PI / 2; hRoad.position.set(offsetX, 0.05, posZ); worldGroup.add(hRoad);
+                }
+            }
+
+            const trunkMat = new THREE.MeshStandardMaterial({ color: 0x78350f });
+            const leavesMat = new THREE.MeshStandardMaterial({ color: 0x166534, roughness: 0.6 });
+
+            for (let i = 0; i < 90; i++) {
+                const tx = offsetX + (Math.random() - 0.5) * (citySize - 35);
+                const tz = offsetZ + (Math.random() - 0.5) * (citySize - 35);
+
+                const treeGroup = new THREE.Group();
+                const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.7, 4, 8), trunkMat); trunk.position.y = 2; treeGroup.add(trunk);
+                const leaves = new THREE.Mesh(new THREE.ConeGeometry(3.5, 8, 8), leavesMat); leaves.position.y = 6; treeGroup.add(leaves);
+                const leaves2 = new THREE.Mesh(new THREE.ConeGeometry(2.8, 6, 8), leavesMat); leaves2.position.y = 8; treeGroup.add(leaves2);
+
+                treeGroup.position.set(tx, 0, tz); worldGroup.add(treeGroup);
+
+                const obs = new THREE.Mesh(boxGeo, trunkMat); obs.visible = false;
+                obs.scale.set(1.5, 8, 1.5); obs.position.set(tx, 4, tz); worldGroup.add(obs);
+                obs.userData = { minX: tx - 1, maxX: tx + 1, minZ: tz - 1, maxZ: tz + 1 };
+                obstacles.push(obs);
+            }
+        }
+
+        function buildCity(offsetX, offsetZ, materials, cityIndex) {
+            const startPosX = offsetX - (citySize / 2);
+            const startPosZ = offsetZ - (citySize / 2);
+            
+            const ground = new THREE.Mesh(new THREE.PlaneGeometry(citySize, citySize), new THREE.MeshLambertMaterial({ color: 0x090d16 }));
+            ground.rotation.x = -Math.PI / 2; ground.position.set(offsetX, 0, offsetZ); worldGroup.add(ground);
+
+            for (let i = 0; i <= cityGridCount; i++) {
+                const posX = startPosX + i * step + roadWidth / 2;
+                const posZ = startPosZ + i * step + roadWidth / 2;
+                roadCenters.push(posX);
+                
+                const vRoad = new THREE.Mesh(new THREE.PlaneGeometry(roadWidth, citySize), roadMat);
+                vRoad.rotation.x = -Math.PI / 2; vRoad.position.set(posX, 0.01, offsetZ); worldGroup.add(vRoad);
+                const vLine = new THREE.Mesh(new THREE.PlaneGeometry(0.3, citySize), lineMat);
+                vLine.rotation.x = -Math.PI / 2; vLine.position.set(posX, 0.02, offsetZ); worldGroup.add(vLine);
+                
+                const hRoad = new THREE.Mesh(new THREE.PlaneGeometry(citySize, roadWidth), roadMat);
+                hRoad.rotation.x = -Math.PI / 2; hRoad.position.set(offsetX, 0.01, posZ); worldGroup.add(hRoad);
+                const hLine = new THREE.Mesh(new THREE.PlaneGeometry(citySize, 0.3), lineMat);
+                hLine.rotation.x = -Math.PI / 2; hLine.position.set(offsetX, 0.02, posZ); worldGroup.add(hLine);
+            }
+
+            for (let rx = 0; rx < cityGridCount; rx++) {
+                for (let rz = 0; rz < cityGridCount; rz++) {
+                    const blockCenterX = startPosX + roadWidth + blockSize / 2 + rx * step;
+                    const blockCenterZ = startPosZ + roadWidth + blockSize / 2 + rz * step;
+                    
+                    const sidewalk = new THREE.Mesh(new THREE.BoxGeometry(blockSize - 1, 0.3, blockSize - 1), sidewalkMat);
+                    sidewalk.position.set(blockCenterX, 0.15, blockCenterZ); worldGroup.add(sidewalk);
+
+                    [{ offset: [-14, -14], size: [22, 22] }, { offset: [14, -14], size: [22, 22] }, { offset: [-14, 14], size: [22, 22] }, { offset: [14, 14], size: [22, 22] }].forEach((plot, index) => {
+                        const bx = blockCenterX + plot.offset[0], bz = blockCenterZ + plot.offset[1];
+                        
+                        if (cityIndex === 3 && rx === 1 && rz === 1 && index === 2) {
+                            createWalkInMarket(bx, bz, plot.size[0], plot.size[1]);
+                        } else if (cityIndex === 3 && rx === 1 && rz === 1 && index === 3) {
+                            createWalkInPoliceStation(bx, bz, plot.size[0], plot.size[1]);
+                        } else {
+                            const h = 25 + Math.random() * 45, w = plot.size[0], d = plot.size[1];
+                            const mat = materials[Math.floor(Math.random() * materials.length)];
+                            const bMesh = new THREE.Mesh(boxGeo, mat);
+                            bMesh.position.set(bx, h / 2 + 0.3, bz); bMesh.scale.set(w, h, d); worldGroup.add(bMesh);
+                            bMesh.userData = { minX: bx - w/2, maxX: bx + w/2, minZ: bz - d/2, maxZ: bz + d/2 };
+                            buildings.push(bMesh); obstacles.push(bMesh);
+                        }
+                    });
+                }
+            }
+        }
+
+        cityCenters.forEach((c, idx) => {
+            if (c.type === 'dunes') buildDunes(c.x, c.z);
+            else if (c.type === 'forest') buildForest(c.x, c.z);
+            else buildCity(c.x, c.z, bMaterialsArr[idx], idx);
+        });
+
+        const railMat = new THREE.MeshLambertMaterial({ color: 0x64748b });
+        const streetPoleMat = new THREE.MeshLambertMaterial({ color: 0x334155 });
+        const streetBulbMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
+
+        function createStreetLight(x, z, rotY, addLightSource = false) {
+            const group = new THREE.Group();
+            const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.16, 6, 8), streetPoleMat); pole.position.y = 3; group.add(pole);
+            const arm = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 1.6), streetPoleMat); arm.position.set(0, 5.8, 0.7); group.add(arm);
+            const head = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.15, 0.5), streetPoleMat); head.position.set(0, 5.75, 1.4); group.add(head);
+            const bulb = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.05, 0.4), streetBulbMat); bulb.position.set(0, 5.65, 1.4); group.add(bulb);
+
+            if (addLightSource) {
+                const pLight = new THREE.PointLight(0xfef08a, 0.8, 22);
+                pLight.position.set(0, 5.5, 1.4); group.add(pLight); streetLightSources.push(pLight);
+            }
+            group.position.set(x, 0, z); group.rotation.y = rotY; worldGroup.add(group);
+        }
+
+        function createBridge(startX, startZ, endX, endZ, isHorizontal) {
+            const centerX = (startX + endX) / 2;
+            const centerZ = (startZ + endZ) / 2;
+            const len = isHorizontal ? Math.abs(endX - startX) : Math.abs(endZ - startZ);
+
+            const bRoad = new THREE.Mesh(new THREE.PlaneGeometry(isHorizontal ? len : roadWidth, isHorizontal ? roadWidth : len), roadMat);
+            bRoad.rotation.x = -Math.PI / 2; bRoad.position.set(centerX, 0.05, centerZ); worldGroup.add(bRoad);
+
+            const bLine = new THREE.Mesh(new THREE.PlaneGeometry(isHorizontal ? len : 0.4, isHorizontal ? 0.4 : len), lineMat);
+            bLine.rotation.x = -Math.PI / 2; bLine.position.set(centerX, 0.06, centerZ); worldGroup.add(bLine);
+
+            if (isHorizontal) {
+                const r1 = new THREE.Mesh(boxGeo, railMat); r1.position.set(centerX, 1.0, centerZ + roadWidth/2); r1.scale.set(len, 1.5, 0.8); worldGroup.add(r1);
+                r1.userData = { minX: centerX - len/2, maxX: centerX + len/2, minZ: centerZ + roadWidth/2 - 0.4, maxZ: centerZ + roadWidth/2 + 0.4 }; obstacles.push(r1);
+
+                const r2 = new THREE.Mesh(boxGeo, railMat); r2.position.set(centerX, 1.0, centerZ - roadWidth/2); r2.scale.set(len, 1.5, 0.8); worldGroup.add(r2);
+                r2.userData = { minX: centerX - len/2, maxX: centerX + len/2, minZ: centerZ - roadWidth/2 - 0.4, maxZ: centerZ - roadWidth/2 + 0.4 }; obstacles.push(r2);
+
+                for (let px = centerX - len/2 + 20; px < centerX + len/2; px += 35) {
+                    const pillar = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 20), railMat); pillar.position.set(px, -10, centerZ); worldGroup.add(pillar);
+                    createStreetLight(px, centerZ + roadWidth / 2 - 1, Math.PI, true);
+                    createStreetLight(px, centerZ - roadWidth / 2 + 1, 0, true);
+                }
+            } else {
+                const r1 = new THREE.Mesh(boxGeo, railMat); r1.position.set(centerX + roadWidth/2, 1.0, centerZ); r1.scale.set(0.8, 1.5, len); worldGroup.add(r1);
+                r1.userData = { minX: centerX + roadWidth/2 - 0.4, maxX: centerX + roadWidth/2 + 0.4, minZ: centerZ - len/2, maxZ: centerZ + len/2 }; obstacles.push(r1);
+
+                const r2 = new THREE.Mesh(boxGeo, railMat); r2.position.set(centerX - roadWidth/2, 1.0, centerZ); r2.scale.set(0.8, 1.5, len); worldGroup.add(r2);
+                r2.userData = { minX: centerX - roadWidth/2 - 0.4, maxX: centerX - roadWidth/2 + 0.4, minZ: centerZ - len/2, maxZ: centerZ + len/2 }; obstacles.push(r2);
+
+                for (let pz = centerZ - len/2 + 20; pz < centerZ + len/2; pz += 35) {
+                    const pillar = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 20), railMat); pillar.position.set(centerX, -10, pz); worldGroup.add(pillar);
+                    createStreetLight(centerX + roadWidth / 2 - 1, pz, -Math.PI / 2, true);
+                    createStreetLight(centerX - roadWidth / 2 + 1, pz, Math.PI / 2, true);
+                }
+            }
+        }
+
+        const halfCity = citySize / 2;
+        createBridge(halfCity, 0, distanceX - halfCity, 0, true);
+        createBridge(distanceX, halfCity, distanceX, distanceZ - halfCity, false);
+        createBridge(halfCity, distanceZ, distanceX - halfCity, distanceZ, true);
+        createBridge(0, halfCity, 0, distanceZ - halfCity, false);
+
+        const wallHeight = 2.5, wallThick = 1.0;
+        function createBarrier(x, z, w, d) {
+            const b = new THREE.Mesh(boxGeo, railMat); b.position.set(x, wallHeight / 2, z); b.scale.set(w, wallHeight, d); worldGroup.add(b);
+            b.userData = { minX: x - w/2, maxX: x + w/2, minZ: z - d/2, maxZ: z + d/2 }; obstacles.push(b);
+        }
+
+        cityCenters.forEach(c => {
+            const cx = c.x, cz = c.z;
+            const wLen = (citySize - roadWidth) / 2;
+            
+            if (cx === 0) createBarrier(cx - halfCity, cz, wallThick, citySize);
+            if (cx === distanceX) createBarrier(cx + halfCity, cz, wallThick, citySize);
+            if (cz === 0) createBarrier(cx, cz - halfCity, citySize, wallThick);
+            if (cz === distanceZ) createBarrier(cx, cz + halfCity, citySize, wallThick);
+
+            if (cx === 0) {
+                createBarrier(cx + halfCity, cz - (roadWidth/2 + wLen/2), wallThick, wLen);
+                createBarrier(cx + halfCity, cz + (roadWidth/2 + wLen/2), wallThick, wLen);
+            }
+            if (cx === distanceX) {
+                createBarrier(cx - halfCity, cz - (roadWidth/2 + wLen/2), wallThick, wLen);
+                createBarrier(cx - halfCity, cz + (roadWidth/2 + wLen/2), wallThick, wLen);
+            }
+            if (cz === 0) {
+                createBarrier(cx - (roadWidth/2 + wLen/2), cz + halfCity, wLen, wallThick);
+                createBarrier(cx + (roadWidth/2 + wLen/2), cz + halfCity, wLen, wallThick);
+            }
+            if (cz === distanceZ) {
+                createBarrier(cx - (roadWidth/2 + wLen/2), cz - halfCity, wLen, wallThick);
+                createBarrier(cx + (roadWidth/2 + wLen/2), cz - halfCity, wLen, wallThick);
+            }
+        });
+
+        function createVehicleMesh(type, colorHex) {
+            const group = new THREE.Group();
+            const mat = new THREE.MeshLambertMaterial({ color: colorHex || 0x111827 });
+            const glassMat = new THREE.MeshLambertMaterial({ color: 0x38bdf8 });
+            const wheelMat = new THREE.MeshBasicMaterial({ color: 0x334155 });
+            const headlightMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const taillightMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            const wheelGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.3, 12);
+
+            if (type === 'truck') {
+                const cab = new THREE.Mesh(new THREE.BoxGeometry(2.1, 1.2, 1.8), mat); cab.position.set(0, 0.9, 1.9);
+                const box = new THREE.Mesh(new THREE.BoxGeometry(2.2, 2.2, 3.8), new THREE.MeshLambertMaterial({color: 0xe2e8f0})); box.position.set(0, 1.4, -0.9);
+                group.add(cab, box);
+                [[1.05, 2.2], [-1.05, 2.2], [1.05, -1.8], [-1.05, -1.8]].forEach(([wx, wz]) => {
+                    const w = new THREE.Mesh(wheelGeo, wheelMat); w.rotation.z = Math.PI / 2; w.position.set(wx, 0.38, wz); group.add(w);
+                });
+                const ll = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.1), headlightMat); ll.position.set(0.75, 0.65, 2.85);
+                const rl = ll.clone(); rl.position.x = -0.75; group.add(ll, rl); vehicleLightsList.push(ll, rl);
+            } else if (type === 'sports') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.45, 4.8), mat); body.position.y = 0.45;
+                const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.4, 1.8), glassMat); cabin.position.set(0, 0.85, -0.2);
+                const spoiler = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.1, 0.4), new THREE.MeshBasicMaterial({color: 0x111111})); spoiler.position.set(0, 1.0, -2.1);
+                group.add(body, cabin, spoiler);
+                [[1.05, 1.4], [-1.05, 1.4], [1.05, -1.4], [-1.05, -1.4]].forEach(([wx, wz]) => {
+                    const w = new THREE.Mesh(wheelGeo, wheelMat); w.rotation.z = Math.PI / 2; w.position.set(wx, 0.38, wz); group.add(w);
+                });
+                const ll = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), headlightMat); ll.position.set(0.75, 0.5, 2.38);
+                const rl = ll.clone(); rl.position.x = -0.75; group.add(ll, rl); vehicleLightsList.push(ll, rl);
+            } else if (type === 'suv') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.8, 4.6), mat); body.position.y = 0.8;
+                const cabin = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.7, 2.4), glassMat); cabin.position.set(0, 1.55, -0.2);
+                group.add(body, cabin);
+                [[1.15, 1.4], [-1.15, 1.4], [1.15, -1.4], [-1.15, -1.4]].forEach(([wx, wz]) => {
+                    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.45, 0.35, 12), wheelMat); w.rotation.z = Math.PI / 2; w.position.set(wx, 0.45, wz); group.add(w);
+                });
+                const ll = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.2, 0.1), headlightMat); ll.position.set(0.8, 0.85, 2.31);
+                const rl = ll.clone(); rl.position.x = -0.8; group.add(ll, rl); vehicleLightsList.push(ll, rl);
+            } else if (type === 'supercar') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.35, 5.0), mat); body.position.y = 0.35;
+                const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.35, 1.6), glassMat); cabin.position.set(0, 0.7, -0.3);
+                const wing = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.08, 0.5), new THREE.MeshBasicMaterial({color: 0x000000})); wing.position.set(0, 0.9, -2.2);
+                group.add(body, cabin, wing);
+                [[1.1, 1.5], [-1.1, 1.5], [1.1, -1.5], [-1.1, -1.5]].forEach(([wx, wz]) => {
+                    const w = new THREE.Mesh(wheelGeo, wheelMat); w.rotation.z = Math.PI / 2; w.position.set(wx, 0.35, wz); group.add(w);
+                });
+                const ll = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.1), headlightMat); ll.position.set(0.8, 0.4, 2.48);
+                const rl = ll.clone(); rl.position.x = -0.8; group.add(ll, rl); vehicleLightsList.push(ll, rl);
+            } else if (type === 'police') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.6, 4.6), mat); body.position.y = 0.6;
+                const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.5, 2.0), glassMat); cabin.position.set(0, 1.15, -0.1);
+                const redLight = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.15, 0.3), new THREE.MeshBasicMaterial({color: 0xef4444})); redLight.position.set(0.3, 1.48, -0.1);
+                const blueLight = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.15, 0.3), new THREE.MeshBasicMaterial({color: 0x3b82f6})); blueLight.position.set(-0.3, 1.48, -0.1);
+                group.add(body, cabin, redLight, blueLight);
+                [[1.05, 1.4], [-1.05, 1.4], [1.05, -1.4], [-1.05, -1.4]].forEach(([wx, wz]) => {
+                    const w = new THREE.Mesh(wheelGeo, wheelMat); w.rotation.z = Math.PI / 2; w.position.set(wx, 0.38, wz); group.add(w);
+                });
+                const ll = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.1), headlightMat); ll.position.set(0.75, 0.65, 2.3);
+                const rl = ll.clone(); rl.position.x = -0.75; group.add(ll, rl); vehicleLightsList.push(ll, rl);
+            } else if (type === 'bus') {
+                const busBody = new THREE.Mesh(new THREE.BoxGeometry(2.5, 2.4, 8.0), mat); busBody.position.y = 1.4;
+                const frontGlass = new THREE.Mesh(new THREE.BoxGeometry(2.3, 1.0, 0.1), glassMat); frontGlass.position.set(0, 1.8, 3.96);
+                group.add(busBody, frontGlass);
+                const bigWheelGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.35, 12);
+                [[1.25, 2.5], [-1.25, 2.5], [1.25, -2.5], [-1.25, -2.5]].forEach(([wx, wz]) => {
+                    const w = new THREE.Mesh(bigWheelGeo, wheelMat); w.rotation.z = Math.PI / 2; w.position.set(wx, 0.5, wz); group.add(w);
+                });
+                const ll = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.2, 0.1), headlightMat); ll.position.set(0.9, 0.6, 3.96);
+                const rl = ll.clone(); rl.position.x = -0.9; group.add(ll, rl); vehicleLightsList.push(ll, rl);
+            } else if (type === 'convertible') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.5, 4.4), mat); body.position.y = 0.5;
+                const windshield = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.4, 0.1), glassMat); windshield.position.set(0, 0.9, 0.5); windshield.rotation.x = -0.3;
+                const interior = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.3, 1.8), new THREE.MeshLambertMaterial({color: 0x451a03})); interior.position.set(0, 0.55, -0.2);
+                group.add(body, windshield, interior);
+                [[1.0, 1.3], [-1.0, 1.3], [1.0, -1.3], [-1.0, -1.3]].forEach(([wx, wz]) => {
+                    const w = new THREE.Mesh(wheelGeo, wheelMat); w.rotation.z = Math.PI / 2; w.position.set(wx, 0.38, wz); group.add(w);
+                });
+                const ll = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.1), headlightMat); ll.position.set(0.7, 0.55, 2.18);
+                const rl = ll.clone(); rl.position.x = -0.7; group.add(ll, rl); vehicleLightsList.push(ll, rl);
+            } else {
+                // 標準轎車 (Sedan) - 黑色 0x111827
+                const body = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.6, 4.6), mat); body.position.y = 0.6;
+                const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.5, 2.0), glassMat); cabin.position.set(0, 1.15, -0.1);
+                group.add(body, cabin);
+                if (type === 'taxi') {
+                    const sign = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.2, 0.4), new THREE.MeshBasicMaterial({color: 0x111111}));
+                    sign.position.set(0, 1.5, -0.1); group.add(sign);
+                }
+                [[1.05, 1.4], [-1.05, 1.4], [1.05, -1.4], [-1.05, -1.4]].forEach(([wx, wz]) => {
+                    const w = new THREE.Mesh(wheelGeo, wheelMat); w.rotation.z = Math.PI / 2; w.position.set(wx, 0.38, wz); group.add(w);
+                });
+                const ll = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.1), headlightMat); ll.position.set(0.75, 0.65, 2.3);
+                const rl = ll.clone(); rl.position.x = -0.75; group.add(ll, rl);
+                const tll = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.1), taillightMat); tll.position.set(0.75, 0.65, -2.35);
+                const trl = tll.clone(); trl.position.x = -0.75; group.add(tll, trl);
+                vehicleLightsList.push(ll, rl, tll, trl);
+            }
+            return group;
+        }
+
+        let carGroup = createVehicleMesh('sedan', 0x111827);
+        carGroup.position.set(0, 0, 0);
+        scene.add(carGroup);
+
+        function changePlayerVehicle(type) {
+            const oldPos = carGroup.position.clone();
+            const oldRot = carGroup.rotation.y;
+            scene.remove(carGroup);
+            let color = 0x111827;
+            if (type === 'sports') color = 0xd97706;
+            else if (type === 'suv') color = 0x0284c7;
+            else if (type === 'taxi') color = 0xfbbf24;
+            else if (type === 'truck') color = 0x475569;
+            else if (type === 'supercar') color = 0xdc2626;
+            else if (type === 'police') color = 0x0f172a;
+            else if (type === 'bus') color = 0x16a34a;
+            else if (type === 'convertible') color = 0xe11d48;
+
+            carGroup = createVehicleMesh(type, color);
+            carGroup.position.copy(oldPos); carGroup.rotation.y = oldRot;
+            scene.add(carGroup); gameSettings.playerCarType = type;
+        }
+
+        function createWeaponMesh(type) {
+            const group = new THREE.Group();
+            const darkMetal = new THREE.MeshLambertMaterial({ color: 0x1e293b });
+            const woodMat = new THREE.MeshLambertMaterial({ color: 0x78350f });
+
+            if (type === 'pistol') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.1, 0.25), darkMetal); body.position.set(0, 0, 0);
+                const handle = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.15, 0.08), darkMetal); handle.position.set(0, -0.08, -0.06); handle.rotation.x = -0.3;
+                group.add(body, handle);
+            } else if (type === 'smg') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.12, 0.35), darkMetal);
+                const mag = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.2, 0.06), darkMetal); mag.position.set(0, -0.12, 0.05);
+                group.add(body, mag);
+            } else if (type === 'rifle') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.12, 0.55), darkMetal);
+                const stock = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.12, 0.2), woodMat); stock.position.set(0, -0.02, -0.32);
+                const mag = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.22, 0.08), darkMetal); mag.position.set(0, -0.12, 0.05); mag.rotation.x = 0.2;
+                group.add(body, stock, mag);
+            } else if (type === 'sniper') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.12, 0.75), darkMetal);
+                const scope = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.25), darkMetal); scope.rotation.x = Math.PI / 2; scope.position.set(0, 0.09, 0);
+                group.add(body, scope);
+            } else if (type === 'shotgun') {
+                const body = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.12, 0.6), woodMat);
+                const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.5), darkMetal); barrel.rotation.x = Math.PI / 2; barrel.position.set(0, 0.02, 0.2);
+                group.add(body, barrel);
+            }
+            return group;
+        }
+
+        const skinMat = new THREE.MeshLambertMaterial({ color: 0xffe4c4 });
+        const blueShirtMat = new THREE.MeshLambertMaterial({ color: 0x0070f3 });
+        const blackPantsMat = new THREE.MeshLambertMaterial({ color: 0x1a1a1a });
+
+        function createCharacterMesh(shirtColorHex) {
+            const group = new THREE.Group();
+            const sMat = shirtColorHex ? new THREE.MeshLambertMaterial({ color: shirtColorHex }) : blueShirtMat;
+
+            const headMesh = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.42, 0.42), skinMat); headMesh.position.y = 1.45; group.add(headMesh);
+            const torsoMesh = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.55, 0.28), sMat); torsoMesh.position.y = 0.95; group.add(torsoMesh);
+
+            const armGeo = new THREE.BoxGeometry(0.18, 0.52, 0.22);
+            const lArm = new THREE.Mesh(armGeo, skinMat); lArm.position.set(0.35, 0.95, 0); group.add(lArm);
+            const rArm = new THREE.Mesh(armGeo, skinMat); rArm.position.set(-0.35, 0.95, 0); group.add(rArm);
+
+            const legGeo = new THREE.BoxGeometry(0.22, 0.65, 0.25);
+            const lLeg = new THREE.Mesh(legGeo, blackPantsMat); lLeg.position.set(0.13, 0.325, 0); group.add(lLeg);
+            const rLeg = new THREE.Mesh(legGeo, blackPantsMat); rLeg.position.set(-0.13, 0.325, 0); group.add(rLeg);
+
+            return { group, leftArm: lArm, rightArm: rArm, leftLeg: lLeg, rightLeg: rLeg };
+        }
+
+        const playerObj = createCharacterMesh();
+        const playerGroup = playerObj.group;
+        const leftArm = playerObj.leftArm; const rightArm = playerObj.rightArm;
+        const leftLeg = playerObj.leftLeg; const rightLeg = playerObj.rightLeg;
+        playerGroup.visible = false; scene.add(playerGroup);
+
+        let currentWeaponType = 'fist';
+        let currentWeaponMesh = null;
+
+        function equipWeapon(type) {
+            currentWeaponType = type;
+            if (currentWeaponMesh) { rightArm.remove(currentWeaponMesh); currentWeaponMesh = null; }
+            if (type !== 'fist') {
+                currentWeaponMesh = createWeaponMesh(type);
+                currentWeaponMesh.position.set(0, -0.2, 0.2); currentWeaponMesh.rotation.x = Math.PI / 2;
+                rightArm.add(currentWeaponMesh); rightArm.rotation.x = -Math.PI / 3; 
+            } else { rightArm.rotation.x = 0; }
+        }
+
+        const bullets = [];
+        const bulletMat = new THREE.MeshBasicMaterial({ color: 0xfde047 });
+        const bulletGeo = new THREE.SphereGeometry(0.12, 8, 8);
+
+        function shootWeapon() {
+            if (isDriving) return;
+            if (currentWeaponType === 'fist') {
+                rightArm.rotation.x = -Math.PI / 2;
+                setTimeout(() => { rightArm.rotation.x = 0; }, 150);
+                const attackPos = playerGroup.position.clone().add(new THREE.Vector3(0, 1.0, 0)).add(new THREE.Vector3(0, 0, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), playerGroup.rotation.y).multiplyScalar(1.2));
+                checkDamageAt(attackPos, 1.2, 25);
+                return;
+            }
+
+            const pPos = playerGroup.position.clone().add(new THREE.Vector3(0, 1.1, 0));
+            const dir = new THREE.Vector3(0, 0, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), playerGroup.rotation.y).normalize();
+
+            let bulletCount = 1; let damage = 35; let speed = 1.8;
+            if (currentWeaponType === 'shotgun') { bulletCount = 5; damage = 18; }
+            else if (currentWeaponType === 'sniper') { damage = 100; speed = 3.0; }
+            else if (currentWeaponType === 'smg') { damage = 20; }
+            else if (currentWeaponType === 'rifle') { damage = 40; }
+
+            for (let i = 0; i < bulletCount; i++) {
+                const bMesh = new THREE.Mesh(bulletGeo, bulletMat);
+                bMesh.position.copy(pPos); scene.add(bMesh);
+                const spreadDir = dir.clone();
+                if (bulletCount > 1) {
+                    spreadDir.x += (Math.random() - 0.5) * 0.2;
+                    spreadDir.z += (Math.random() - 0.5) * 0.2;
+                }
+                bullets.push({ mesh: bMesh, dir: spreadDir, speed: speed, damage: damage, life: 60 });
+            }
+
+            rightArm.rotation.x = -Math.PI / 2.5;
+            setTimeout(() => { if (currentWeaponType !== 'fist') rightArm.rotation.x = -Math.PI / 3; }, 100);
+        }
+
+        function checkDamageAt(pos, radius, damage) {
+            aiCars.forEach(ai => {
+                if (ai.isDestroyed) return;
+                const dist = pos.distanceTo(ai.group.position);
+                if (dist < radius + 1.8) {
+                    ai.hp -= damage;
+                    if (ai.hp <= 0) {
+                        ai.isDestroyed = true;
+                        ai.baseSpeed = 0;
+                        ai.currentSpeed = 0;
+                        ai.group.traverse(child => { if (child.isMesh) child.material = new THREE.MeshLambertMaterial({ color: 0x111111 }); });
+                    }
+                }
+            });
+        }
+
+        function updateBullets() {
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                const b = bullets[i];
+                b.mesh.position.addScaledVector(b.dir, b.speed);
+                b.life--;
+                checkDamageAt(b.mesh.position, 0.4, b.damage);
+                if (b.life <= 0 || checkCollision(b.mesh.position.x, b.mesh.position.z, 0.2, true)) {
+                    scene.remove(b.mesh); bullets.splice(i, 1);
+                }
+            }
+        }
+
+        const aiCars = [];
+        function spawnAICar() {
+            const types = ['sedan', 'truck', 'taxi', 'sports', 'suv', 'supercar', 'police', 'bus', 'convertible'];
+            const colors = [0xffffff, 0xef4444, 0x3b82f6, 0x10b981, 0x64748b];
+            const type = types[Math.floor(Math.random() * types.length)];
+            const color = type === 'taxi' ? 0xfbbf24 : colors[Math.floor(Math.random() * colors.length)];
+            
+            const aiGroup = createVehicleMesh(type, color);
+            const targetCity = cityCenters[Math.floor(Math.random() * cityCenters.length)];
+            const startX = targetCity.x + (Math.random() - 0.5) * citySize * 0.8;
+            const startZ = targetCity.z + (Math.random() - 0.5) * citySize * 0.8;
+            
+            aiGroup.position.set(startX, 0, startZ);
+            aiGroup.rotation.y = Math.random() * Math.PI * 2;
+            worldGroup.add(aiGroup);
+
+            aiCars.push({
+                group: aiGroup, baseSpeed: 0.15 + Math.random() * 0.08, currentSpeed: 0.15 + Math.random() * 0.08,
+                hp: 120, isDestroyed: false
+            });
+        }
+
+        for (let i = 0; i < 60; i++) spawnAICar();
+
+        function updateAICars() {
+            if (!gameStarted) return;
+            aiCars.forEach(ai => {
+                if (ai.isDestroyed) return;
+                ai.currentSpeed = ai.baseSpeed;
+                const vx = Math.sin(ai.group.rotation.y) * ai.currentSpeed;
+                const vz = Math.cos(ai.group.rotation.y) * ai.currentSpeed;
+
+                if(!checkCollision(ai.group.position.x + vx, ai.group.position.z + vz, 1.5, true)) {
+                    ai.group.position.x += vx; ai.group.position.z += vz;
+                } else {
+                    ai.group.rotation.y += Math.PI * 0.5;
+                }
+            });
+        }
+
+        let audioCtx = null;
+        function playHornSound() {
+            if (gameSettings.volume <= 0) return;
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const osc1 = audioCtx.createOscillator(), osc2 = audioCtx.createOscillator(), gainNode = audioCtx.createGain();
+            osc1.type = 'sawtooth'; osc2.type = 'sawtooth';
+            osc1.frequency.setValueAtTime(425, audioCtx.currentTime); osc2.frequency.setValueAtTime(375, audioCtx.currentTime);
+
+            const maxVol = 0.25 * gameSettings.volume;
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(maxVol, audioCtx.currentTime + 0.03);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+
+            osc1.connect(gainNode); osc2.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc1.start(audioCtx.currentTime); osc2.start(audioCtx.currentTime);
+            osc1.stop(audioCtx.currentTime + 0.35); osc2.stop(audioCtx.currentTime + 0.35);
+        }
+
+        let isDriving = true, speed = 0, maxSpeed = 2.1, acceleration = 0.04, friction = 0.96, turnSpeed = 0.035;
+        let playerY = 0, playerVelY = 0, isGrounded = true, gravity = -0.015, jumpForce = 0.28, isCrouching = false, walkTimer = 0;
+        const inputs = { w: false, s: false, a: false, d: false };
+        let joystickVector = { x: 0, y: 0 }, steeringWheelFactor = 0;
+        let activeInteractiveShelf = null;
+        let nearPoliceStation = false;
+
+        function bindTouchControl(btnId, inputKey) {
+            const btn = document.getElementById(btnId);
+            const start = (e) => { e.preventDefault(); inputs[inputKey] = true; btn.classList.add('active'); };
+            const end = (e) => { e.preventDefault(); inputs[inputKey] = false; btn.classList.remove('active'); };
+            btn.addEventListener('pointerdown', start); btn.addEventListener('pointerup', end);
+            btn.addEventListener('pointerleave', end); btn.addEventListener('pointercancel', end);
+        }
+
+        bindTouchControl('btn-accel', 'w'); bindTouchControl('btn-brake', 's');
+        bindTouchControl('btn-left', 'a'); bindTouchControl('btn-right', 'd');
+
+        const wheelContainer = document.getElementById('steering-wheel-container');
+        const wheelInner = document.getElementById('steering-wheel-inner');
+        let wheelActive = false;
+
+        wheelContainer.addEventListener('pointerdown', (e) => { wheelActive = true; updateWheelAngle(e); });
+        window.addEventListener('pointermove', (e) => { if (wheelActive) updateWheelAngle(e); });
+        window.addEventListener('pointerup', () => { wheelActive = false; wheelInner.style.transform = `rotate(0deg)`; steeringWheelFactor = 0; });
+
+        function updateWheelAngle(e) {
+            const rect = wheelContainer.getBoundingClientRect();
+            const dx = e.clientX - (rect.left + rect.width / 2);
+            const dy = e.clientY - (rect.top + rect.height / 2);
+            let deg = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+            if (deg > 180) deg -= 360;
+            deg = Math.max(-120, Math.min(120, deg));
+            wheelInner.style.transform = `rotate(${deg}deg)`;
+            steeringWheelFactor = deg / 120;
+        }
+
+        document.getElementById('btn-jump').addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            if (isGrounded && !isDriving) { playerVelY = jumpForce; isGrounded = false; }
+        });
+
+        document.getElementById('btn-crouch').addEventListener('pointerdown', (e) => {
+            e.preventDefault(); inputs.crouch = !inputs.crouch;
+            if (inputs.crouch) e.target.classList.add('active'); else e.target.classList.remove('active');
+        });
+
+        document.getElementById('btn-horn').addEventListener('pointerdown', (e) => { e.preventDefault(); if (isDriving) playHornSound(); });
+        document.getElementById('btn-attack').addEventListener('pointerdown', (e) => { e.preventDefault(); shootWeapon(); });
+
+        const weaponWheelOverlay = document.getElementById('weapon-wheel-overlay');
+        const btnWeapon = document.getElementById('btn-weapon');
+        const backpackModal = document.getElementById('backpack-modal');
+        const shelfModal = document.getElementById('shelf-modal');
+        const btnBag = document.getElementById('btn-bag');
+        const interactPrompt = document.getElementById('interact-prompt');
+
+        interactPrompt.addEventListener('pointerdown', (e) => { e.preventDefault(); e.stopPropagation(); handleInteraction(); });
+
+        function toggleWeaponWheel() {
+            if (isDriving) return;
+            const isVisible = weaponWheelOverlay.style.display === 'flex';
+            weaponWheelOverlay.style.display = isVisible ? 'none' : 'flex';
+        }
+
+        function toggleBackpack() {
+            if (isDriving) return;
+            const isVisible = backpackModal.style.display === 'block';
+            if (!isVisible) updateBackpackUI();
+            backpackModal.style.display = isVisible ? 'none' : 'block';
+        }
+
+        btnWeapon.addEventListener('pointerdown', (e) => { e.preventDefault(); toggleWeaponWheel(); });
+        btnBag.addEventListener('pointerdown', (e) => { e.preventDefault(); toggleBackpack(); });
+        document.getElementById('close-backpack-btn').addEventListener('click', () => { backpackModal.style.display = 'none'; });
+        document.getElementById('close-shelf-btn').addEventListener('click', () => { shelfModal.style.display = 'none'; });
+
+        const weaponNames = { fist: '拳頭', pistol: '手槍', smg: '衝鋒槍', rifle: '步槍', sniper: '狙擊槍', shotgun: '霰彈槍' };
+
+        document.querySelectorAll('.wheel-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const type = item.getAttribute('data-weapon');
+                equipWeapon(type);
+                document.getElementById('wheel-selected-name').innerText = weaponNames[type];
+                document.querySelectorAll('.wheel-item').forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+                weaponWheelOverlay.style.display = 'none';
+            });
+        });
+
+        const phoneWrapper = document.getElementById('phone-wrapper');
+        let isPhoneOpen = false;
+
+        function togglePhone() {
+            if (isDriving) return;
+            isPhoneOpen = !isPhoneOpen;
+            if (isPhoneOpen) phoneWrapper.classList.add('active');
+            else phoneWrapper.classList.remove('active');
+        }
+
+        document.getElementById('btn-phone').addEventListener('pointerdown', (e) => { e.preventDefault(); togglePhone(); });
+        document.getElementById('phone-home-btn').addEventListener('click', () => { cameraModal.style.display = 'none'; togglePhone(); });
+        document.getElementById('phone-back-btn').addEventListener('click', () => {
+            if (cameraModal.style.display === 'flex') cameraModal.style.display = 'none';
+            else togglePhone();
+        });
+        document.getElementById('app-settings').addEventListener('click', () => { document.getElementById('settings-modal').style.display = 'block'; });
+
+        const cameraApp = document.getElementById('app-camera'), cameraModal = document.getElementById('camera-modal');
+        const photoPreview = document.getElementById('photo-preview'), photoDownloadLink = document.getElementById('photo-download-link');
+
+        cameraApp.addEventListener('click', () => {
+            renderer.render(scene, camera);
+            const dataURL = renderer.domElement.toDataURL('image/png');
+            photoPreview.src = dataURL; photoDownloadLink.href = dataURL;
+            photoDownloadLink.download = `photo_${Date.now()}.png`;
+            cameraModal.style.display = 'flex';
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (gameOverlay.style.display !== 'block') return;
+            const k = e.key.toLowerCase();
+            if (k === 'w' || k === 'arrowup') inputs.w = true;
+            if (k === 's' || k === 'arrowdown') inputs.s = true;
+            if (k === 'a' || k === 'arrowleft') inputs.a = true;
+            if (k === 'd' || k === 'arrowright') inputs.d = true;
+            if (k === ' ' && !isDriving) shootWeapon();
+            if (k === 'f') handleInteraction();
+            if (k === 'b' && !isDriving) toggleBackpack();
+            if (k === 'r') resetPos();
+            if (k === 'h' && isDriving) playHornSound();
+            if (k === 'p' && !isDriving) togglePhone();
+            if (k === 'tab' && !isDriving) { e.preventDefault(); toggleWeaponWheel(); }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (gameOverlay.style.display !== 'block') return;
+            const k = e.key.toLowerCase();
+            if (k === 'w' || k === 'arrowup') inputs.w = false;
+            if (k === 's' || k === 'arrowdown') inputs.s = false;
+            if (k === 'a' || k === 'arrowleft') inputs.a = false;
+            if (k === 'd' || k === 'arrowright') inputs.d = false;
+        });
+
+        function handleInteraction() {
+            if (!isDriving && activeInteractiveShelf) {
+                openShelfUI(activeInteractiveShelf.key); return;
+            }
+            if (!isDriving && nearPoliceStation) {
+                alert("歡迎來到復古偵探警察局！"); return;
+            }
+            toggleDrive();
+        }
+
+        function checkInteractions() {
+            if (isDriving) {
+                interactPrompt.style.display = 'none';
+                activeInteractiveShelf = null; nearPoliceStation = false; return;
+            }
+
+            const pPos = playerGroup.position;
+            let nearShelf = null;
+
+            for (let s of interactiveShelves) {
+                if (pPos.distanceTo(s.worldPos) < s.radius) { nearShelf = s; break; }
+            }
+
+            if (nearShelf) {
+                activeInteractiveShelf = nearShelf;
+                interactPrompt.innerText = `點擊 / 按 F 瀏覽 ${nearShelf.name}`;
+                interactPrompt.style.display = 'block'; return;
+            } else activeInteractiveShelf = null;
+
+            if (policeDoorArea && pPos.distanceTo(new THREE.Vector3(policeDoorArea.x, 0, policeDoorArea.z)) < policeDoorArea.radius) {
+                nearPoliceStation = true;
+                interactPrompt.innerText = `點擊 / 按 F 進入警察局`;
+                interactPrompt.style.display = 'block'; return;
+            } else nearPoliceStation = false;
+
+            interactPrompt.style.display = 'none';
+        }
+
+        function toggleDrive() {
+            const t = translations[gameSettings.lang];
+            if (isDriving) {
+                playerGroup.position.set(carGroup.position.x + 2.5, carGroup.position.y, carGroup.position.z);
+                playerY = carGroup.position.y; playerGroup.visible = true; isDriving = false;
+                document.getElementById('mode-indicator').innerText = t.walkMode;
+                document.getElementById('speedometer').innerText = '';
+                document.getElementById('btn-action').innerText = t.getOn;
+                document.getElementById('btn-horn').style.display = 'none';
+                document.getElementById('btn-phone').style.display = 'block';
+                document.getElementById('btn-weapon').style.display = 'block';
+                document.getElementById('btn-bag').style.display = 'block';
+                document.getElementById('btn-attack').style.display = 'block';
+                document.getElementById('car-controls').style.display = 'none';
+                document.getElementById('person-controls').style.display = 'flex';
+                document.getElementById('joystick-container').style.display = 'block';
+            } else {
+                if (playerGroup.position.distanceTo(carGroup.position) < 5) {
+                    playerGroup.visible = false; isDriving = true;
+                    if (isPhoneOpen) togglePhone();
+                    weaponWheelOverlay.style.display = 'none';
+                    backpackModal.style.display = 'none';
+                    shelfModal.style.display = 'none';
+                    document.getElementById('mode-indicator').innerText = t.driveMode;
+                    document.getElementById('btn-action').innerText = t.getOff;
+                    document.getElementById('btn-horn').style.display = 'block';
+                    document.getElementById('btn-phone').style.display = 'none';
+                    document.getElementById('btn-weapon').style.display = 'none';
+                    document.getElementById('btn-bag').style.display = 'none';
+                    document.getElementById('btn-attack').style.display = 'none';
+                    document.getElementById('car-controls').style.display = 'flex';
+                    document.getElementById('person-controls').style.display = 'none';
+                    document.getElementById('joystick-container').style.display = 'none';
+                }
+            }
+        }
+
+        function resetPos() {
+            carGroup.position.set(distanceX, 0, distanceZ);
+            carGroup.rotation.set(0, 0, 0); speed = 0;
+            cameraYaw = 0; cameraPitch = 0.2;
+        }
+
+        document.getElementById('btn-action').addEventListener('click', handleInteraction);
+        document.getElementById('btn-reset').addEventListener('click', resetPos);
+
+        const joystick = document.getElementById('joystick-container'), stick = document.getElementById('joystick-stick');
+        let jActive = false;
+
+        joystick.addEventListener('pointerdown', (e) => { jActive = true; moveStick(e); });
+        window.addEventListener('pointermove', (e) => { if (jActive) moveStick(e); });
+        window.addEventListener('pointerup', () => { jActive = false; stick.style.left = '30px'; stick.style.top = '30px'; joystickVector = { x: 0, y: 0 }; });
+
+        function moveStick(e) {
+            const rect = joystick.getBoundingClientRect();
+            const dx = e.clientX - (rect.left + 50), dy = e.clientY - (rect.top + 50);
+            const dist = Math.hypot(dx, dy), angle = Math.atan2(dy, dx), r = Math.min(dist, 40);
+            stick.style.left = `${30 + Math.cos(angle) * r}px`; stick.style.top = `${30 + Math.sin(angle) * r}px`;
+            joystickVector = { x: (Math.cos(angle) * r) / 40, y: (Math.sin(angle) * r) / 40 };
+        }
+
+        function checkCollision(x, z, r = 1.0, ignoreAI = false) {
+            for (let obs of obstacles) {
+                if (x + r > obs.userData.minX && x - r < obs.userData.maxX && z + r > obs.userData.minZ && z - r < obs.userData.maxZ) return true;
+            }
+            if (!ignoreAI) {
+                for (let ai of aiCars) {
+                    if (ai.isDestroyed) continue;
+                    if (Math.hypot(ai.group.position.x - x, ai.group.position.z - z) < 2.2 + r) return true;
+                }
+            }
+            return false;
+        }
+
+        const minimapCanvas = document.getElementById('minimap'), miniCtx = minimapCanvas.getContext('2d');
+        const worldTotalSize = distanceX + citySize;
+        const mapScale = 130 / (worldTotalSize * 1.15);
+        const mapOffsetMargin = 8;
+
+        function updateMinimap() {
+            if (!gameStarted) return;
+            miniCtx.clearRect(0, 0, 130, 130);
+            miniCtx.fillStyle = '#0284c7'; miniCtx.fillRect(0, 0, 130, 130);
+
+            const activeObj = isDriving ? carGroup : playerGroup;
+            const minWorldPos = -citySize / 2;
+
+            cityCenters.forEach(c => {
+                const cx = (c.x - minWorldPos) * mapScale + mapOffsetMargin;
+                const cz = (c.z - minWorldPos) * mapScale + mapOffsetMargin;
+                const sz = citySize * mapScale;
+                
+                if (c.type === 'dunes') miniCtx.fillStyle = '#eab308';
+                else if (c.type === 'forest') miniCtx.fillStyle = '#15803d';
+                else miniCtx.fillStyle = '#1e293b';
+
+                miniCtx.fillRect(cx - sz/2, cz - sz/2, sz, sz);
+            });
+
+            miniCtx.fillStyle = '#475569';
+            const bridgeW = roadWidth * mapScale;
+            const bridgeL = bridgeLength * mapScale;
+
+            cityCenters.forEach(c => {
+                const cx = (c.x - minWorldPos) * mapScale + mapOffsetMargin;
+                const cz = (c.z - minWorldPos) * mapScale + mapOffsetMargin;
+                const hCity = (citySize / 2) * mapScale;
+
+                if (c.x === 0 && c.z === 0) miniCtx.fillRect(cx + hCity, cz - bridgeW/2, bridgeL, bridgeW);
+                if (c.x === 0 && c.z === distanceZ) miniCtx.fillRect(cx + hCity, cz - bridgeW/2, bridgeL, bridgeW);
+                if (c.x === 0 && c.z === 0) miniCtx.fillRect(cx - bridgeW/2, cz + hCity, bridgeW, bridgeL);
+                if (c.x === distanceX && c.z === 0) miniCtx.fillRect(cx - bridgeW/2, cz + hCity, bridgeW, bridgeL);
+            });
+
+            const targetX = (activeObj.position.x - minWorldPos) * mapScale + mapOffsetMargin;
+            const targetZ = (activeObj.position.z - minWorldPos) * mapScale + mapOffsetMargin;
+
+            miniCtx.save();
+            miniCtx.translate(targetX, targetZ);
+            miniCtx.rotate(-activeObj.rotation.y);
+            miniCtx.fillStyle = isDriving ? '#38bdf8' : '#34d399';
+            miniCtx.beginPath(); miniCtx.moveTo(0, 5); miniCtx.lineTo(-3, -3); miniCtx.lineTo(0, -1.5); miniCtx.lineTo(3, -3); miniCtx.closePath(); miniCtx.fill();
+            miniCtx.restore();
+        }
+
+        let gameStarted = false;
+
+        function updateCameraTransform(targetPos) {
+            const totalYaw = (isDriving ? carGroup.rotation.y : 0) + cameraYaw;
+            
+            const offsetX = cameraDistance * Math.cos(cameraPitch) * Math.sin(totalYaw);
+            const offsetY = cameraDistance * Math.sin(cameraPitch);
+            const offsetZ = cameraDistance * Math.cos(cameraPitch) * Math.cos(totalYaw);
+
+            const camPos = new THREE.Vector3(
+                targetPos.x - offsetX,
+                targetPos.y + Math.max(1.5, offsetY),
+                targetPos.z - offsetZ
+            );
+
+            camera.position.lerp(camPos, 0.2);
+            camera.lookAt(targetPos.x, targetPos.y + 1, targetPos.z);
+        }
+
+        /* ==================== 多人區域網路連線系統 (PeerJS) ==================== */
+        let peer = null;
+        let conn = null;
+        let otherCarMesh = null;
+        let isMultiplayer = false;
+
+        function initPeerServer(customRoomCode = null) {
+            const prefix = "dw2026-room-";
+            const roomCode = customRoomCode || Math.floor(100000 + Math.random() * 900000).toString();
+            const peerId = prefix + roomCode;
+
+            peer = new Peer(peerId);
+
+            peer.on('open', (id) => {
+                document.getElementById('my-room-code').innerText = roomCode;
+                document.getElementById('room-status-text').innerText = "連線成功！等待其他玩家加入...";
+            });
+
+            peer.on('connection', (connection) => {
+                conn = connection;
+                setupConnection();
+                document.getElementById('room-status-text').innerText = "綠燈玩家已加入！可以進入遊戲。";
+                document.getElementById('room-status-text').style.color = "#34d399";
+                document.getElementById('start-multi-game-btn').style.display = 'block';
+            });
+
+            peer.on('error', (err) => {
+                alert("房間建立失敗或代碼已存在，請重新嘗試。");
+            });
+        }
+
+        function joinPeerRoom(roomCode) {
+            const prefix = "dw2026-room-";
+            const peerId = prefix + roomCode;
+
+            peer = new Peer();
+
+            peer.on('open', () => {
+                conn = peer.connect(peerId);
+                setupConnection();
+            });
+
+            peer.on('error', (err) => {
+                alert("找不到該房間代碼或連線失敗，請確認代碼是否正確。");
+            });
+        }
+
+        function setupConnection() {
+            isMultiplayer = true;
+
+            // 建立第二位玩家的 3D 車輛模型
+            otherCarMesh = createVehicleMesh('sports', 0xef4444);
+            otherCarMesh.position.set(distanceX + 3, 0, distanceZ);
+            worldGroup.add(otherCarMesh);
+
+            conn.on('open', () => {
+                if (multiplayModal.style.display === 'block' && document.getElementById('room-created-info').style.display === 'none') {
+                    // 加入者自動進入遊戲
+                    startMultiplayerGame();
+                }
+            });
+
+            conn.on('data', (data) => {
+                if (data && otherCarMesh) {
+                    otherCarMesh.position.set(data.x, data.y, data.z);
+                    otherCarMesh.rotation.y = data.rotY;
+                }
+            });
+        }
+
+        function sendNetworkData() {
+            if (isMultiplayer && conn && conn.open) {
+                conn.send({
+                    x: carGroup.position.x,
+                    y: carGroup.position.y,
+                    z: carGroup.position.z,
+                    rotY: carGroup.rotation.y
+                });
+            }
+        }
+
+        function startMultiplayerGame() {
+            multiplayModal.style.display = 'none';
+            document.getElementById('start-screen').style.display = 'none';
+            menuPlatformGroup.visible = false;
+            worldGroup.visible = true;
+
+            carGroup.position.set(distanceX, 0, distanceZ);
+            carGroup.rotation.set(0, 0, 0);
+
+            document.getElementById('weather-hud').style.display = 'block';
+            document.getElementById('btn-reset').style.display = 'block';
+            document.getElementById('btn-action').style.display = 'block';
+            document.getElementById('btn-horn').style.display = 'block';
+            document.querySelectorAll('.game-ui').forEach(el => {
+                if (el.id === 'car-controls') el.style.display = 'flex';
+                else if (el.id === 'btn-phone' || el.id === 'btn-weapon' || el.id === 'btn-bag' || el.id === 'btn-attack') el.style.display = 'none';
+                else el.style.display = 'block';
+            });
+            updateSteeringUI();
+            gameStarted = true;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (!gameStarted) {
+                scene.background.copy(menuBgColor);
+                scene.fog.color.copy(menuBgColor);
+
+                carGroup.rotation.y += 0.012;
+                carGroup.position.set(0, 0, 0);
+
+                camera.position.set(0, 3.2, 7.5);
+                camera.lookAt(0, 0.8, 0);
+
+                renderer.render(scene, camera);
+                return;
+            }
+
+            syncSunAndSkyWithTime();
+            updateRain();
+
+            const hCityHalf = citySize / 2;
+
+            if (isDriving) {
+                if (inputs.w) speed += acceleration;
+                if (inputs.s) speed -= acceleration;
+                speed = Math.max(-maxSpeed/2, Math.min(speed, maxSpeed)) * friction;
+
+                if (Math.abs(speed) > 0.01) {
+                    const dir = speed > 0 ? 1 : -1;
+                    if (gameSettings.steerMode === 'wheel') carGroup.rotation.y -= turnSpeed * dir * steeringWheelFactor;
+                    else {
+                        if (inputs.a) carGroup.rotation.y += turnSpeed * dir;
+                        if (inputs.d) carGroup.rotation.y -= turnSpeed * dir;
+                    }
+                }
+
+                const vx = Math.sin(carGroup.rotation.y) * speed, vz = Math.cos(carGroup.rotation.y) * speed;
+                if (!checkCollision(carGroup.position.x + vx, carGroup.position.z + vz, 1.2)) {
+                    carGroup.position.x += vx; carGroup.position.z += vz;
+                } else { speed = -speed * 0.3; }
+
+                if (Math.abs(carGroup.position.x) < hCityHalf && Math.abs(carGroup.position.z) < hCityHalf) {
+                    const duneY = getDuneHeight(carGroup.position.x, carGroup.position.z);
+                    carGroup.position.y = THREE.MathUtils.lerp(carGroup.position.y, Math.max(0, duneY) + 0.05, 0.2);
+                } else {
+                    carGroup.position.y = THREE.MathUtils.lerp(carGroup.position.y, 0, 0.2);
+                }
+
+                document.getElementById('speedometer').innerText = Math.round(Math.abs(speed) * 90) + " km/h";
+                updateCameraTransform(carGroup.position);
+            } else {
+                let baseGroundY = 0;
+                if (Math.abs(playerGroup.position.x) < hCityHalf && Math.abs(playerGroup.position.z) < hCityHalf) {
+                    baseGroundY = Math.max(0, getDuneHeight(playerGroup.position.x, playerGroup.position.z));
+                }
+
+                if (!isGrounded) {
+                    playerVelY += gravity; playerY += playerVelY;
+                    if (playerY <= baseGroundY) { playerY = baseGroundY; playerVelY = 0; isGrounded = true; }
+                } else {
+                    playerY = baseGroundY;
+                }
+
+                isCrouching = inputs.crouch;
+                playerGroup.scale.set(1, isCrouching ? 0.6 : 1, 1);
+
+                let mx = 0, mz = 0;
+                if (inputs.w) mz += 1; if (inputs.s) mz -= 1;
+                if (inputs.a) mx += 1; if (inputs.d) mx -= 1;
+                if (Math.abs(joystickVector.x) > 0.1 || Math.abs(joystickVector.y) > 0.1) { mx = -joystickVector.x; mz = -joystickVector.y; }
+
+                const moveSpeed = isCrouching ? 0.08 : 0.16;
+                const len = Math.hypot(mx, mz);
+                if (len > 0.05) {
+                    const forwardX = Math.sin(cameraYaw);
+                    const forwardZ = Math.cos(cameraYaw);
+                    const rightX = Math.cos(cameraYaw);
+                    const rightZ = -Math.sin(cameraYaw);
+
+                    const moveX = (forwardX * (mz / len) + rightX * (mx / len)) * moveSpeed;
+                    const moveZ = (forwardZ * (mz / len) + rightZ * (mx / len)) * moveSpeed;
+
+                    if (!checkCollision(playerGroup.position.x + moveX, playerGroup.position.z + moveZ, 0.4)) {
+                        playerGroup.position.x += moveX; playerGroup.position.z += moveZ;
+                    }
+                    playerGroup.rotation.y = Math.atan2(moveX, moveZ);
+
+                    if (isGrounded) {
+                        walkTimer += 0.2;
+                        leftArm.rotation.x = Math.sin(walkTimer) * 0.5;
+                        if (currentWeaponType === 'fist') rightArm.rotation.x = -Math.sin(walkTimer) * 0.5;
+                        leftLeg.rotation.x = -Math.sin(walkTimer) * 0.5; rightLeg.rotation.x = Math.sin(walkTimer) * 0.5;
+                    }
+                } else {
+                    leftArm.rotation.x = 0; leftLeg.rotation.x = rightLeg.rotation.x = 0;
+                    if (currentWeaponType === 'fist') rightArm.rotation.x = 0;
+                }
+
+                playerGroup.position.y = playerY;
+                updateCameraTransform(playerGroup.position);
+                checkInteractions();
+            }
+
+            updateBullets();
+            updateAICars();
+            updateMinimap();
+            sendNetworkData();
+
+            renderer.render(scene, camera);
+        }
+
+        // 單人模式啟動按鈕
+        document.getElementById('play-btn').addEventListener('click', () => {
+            startMultiplayerGame();
+        });
+
+        // 多人模式 UI 與按鈕邏輯
+        const multiplayModal = document.getElementById('multiplay-modal');
+        document.getElementById('multiplay-btn').addEventListener('click', () => {
+            multiplayModal.style.display = 'block';
+        });
+
+        document.getElementById('close-multiplay-btn').addEventListener('click', () => {
+            multiplayModal.style.display = 'none';
+        });
+
+        document.getElementById('create-room-btn').addEventListener('click', () => {
+            document.getElementById('multiplay-options').style.display = 'none';
+            document.getElementById('room-created-info').style.display = 'block';
+            initPeerServer();
+        });
+
+        document.getElementById('join-room-btn').addEventListener('click', () => {
+            const code = document.getElementById('join-room-code-input').value.trim();
+            if (code.length === 6) {
+                joinPeerRoom(code);
+            } else {
+                alert("請輸入完整的 6 位數房間代碼！");
+            }
+        });
+
+        document.getElementById('start-multi-game-btn').addEventListener('click', () => {
+            startMultiplayerGame();
+        });
+
+        const garageModal = document.getElementById('garage-modal');
+        document.getElementById('garage-btn').addEventListener('click', () => { garageModal.style.display = 'block'; });
+        document.getElementById('close-garage-btn').addEventListener('click', () => { garageModal.style.display = 'none'; });
+        document.getElementById('garage-car-select').addEventListener('change', (e) => { changePlayerVehicle(e.target.value); });
+
+        const helpModal = document.getElementById('help-modal');
+        document.getElementById('help-btn').addEventListener('click', () => { helpModal.style.display = 'block'; });
+        document.getElementById('close-help-btn').addEventListener('click', () => { helpModal.style.display = 'none'; });
+
+        const settingsModal = document.getElementById('settings-modal');
+        document.getElementById('settings-btn').addEventListener('click', () => { settingsModal.style.display = 'block'; });
+        document.getElementById('close-settings-btn').addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+            updateSteeringUI();
+        });
+
+        document.getElementById('sett-lang').addEventListener('change', (e) => {
+            gameSettings.lang = e.target.value; updateUILanguage(); fetchRealWeather();
+        });
+        document.getElementById('sett-vol').addEventListener('input', (e) => {
+            gameSettings.volume = parseFloat(e.target.value) / 100;
+            document.getElementById('sett-vol-label').innerText = translations[gameSettings.lang].volLabel + e.target.value + "%";
+        });
+        document.getElementById('sett-steer').addEventListener('change', (e) => { gameSettings.steerMode = e.target.value; });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        updateUILanguage();
+        animate();
+    </script>
+</body>
+</html>
